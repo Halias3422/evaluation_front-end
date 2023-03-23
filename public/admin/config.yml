@@ -1,5 +1,6 @@
 backend:
   name: git-gateway
+  repo: Halias3422/evaluation_front-end
   branch: main # Branch to update (optional; defaults to master)
 
 # This line should *not* be indented
@@ -9,22 +10,27 @@ publish_mode: editorial_workflow
 media_folder: "public/images" # Media files will be stored in the repo under static/images/uploads
 public_folder: "/images" # The src attribute for uploaded media will begin with /images/uploads
 
+locale: "fr"
+
 collections:
-  - name: "photographies"
-    label: "Photographies"
-    folder: "content/photographies/"
+  - name: "photos"
+    label: "Photos"
+    folder: "content/photos/"
     create: true
-    slug: "{{title}}-{{day}}-{{month}}-{{slug}}"
+    slug: "{{title}}-{{day}}-{{month}}--{{year}}"
     fields:
-      - {
-          label: "Layout",
-          name: "layout",
-          widget: "hidden",
-          default: "photographies",
-        }
+      - { label: "Layout", name: "layout", widget: "hidden", default: "photos" }
       - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Date de publication", name: "date", widget: "datetime" }
-      - { label: "Photographie", name: "photography", widget: "image" }
+      - {
+          label: "Date de publication",
+          name: "date",
+          widget: "datetime",
+          date_format: "DD.MM.YYYY",
+          time_format: true,
+          format: "DD.MM.YYYY",
+        }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Description", name: "description", widget: "string" }
       - {
           label: "Catégorie",
           name: "category",
@@ -34,8 +40,8 @@ collections:
           search_fields: ["name"],
           multiple: true,
           min: 1,
+          max: 3,
         }
-      - { label: "Description", name: "description", widget: "string" }
 
   - name: "categories"
     label: "Catégories"
