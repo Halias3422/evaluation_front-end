@@ -10,15 +10,43 @@ media_folder: "public/images" # Media files will be stored in the repo under sta
 public_folder: "/images" # The src attribute for uploaded media will begin with /images/uploads
 
 collections:
-  - name: "photo"
-    label: "Photo"
-    folder: "content/photos/"
+  - name: "photographies"
+    label: "Photographies"
+    folder: "content/photographies/"
     create: true
     slug: "{{title}}-{{day}}-{{month}}-{{slug}}"
     fields:
-      - { label: "Layout", name: "layout", widget: "hidden", default: "photo" }
+      - {
+          label: "Layout",
+          name: "layout",
+          widget: "hidden",
+          default: "photographies",
+        }
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Date de publication", name: "date", widget: "datetime" }
-      - { label: "Photo", name: "photo", widget: "image" }
-      - { label: "Catégorie", name: "category", widget: "relation" }
+      - { label: "Photographie", name: "photography", widget: "image" }
+      - {
+          label: "Catégorie",
+          name: "category",
+          widget: "relation",
+          collection: "categories",
+          value_field: "name",
+          search_fields: ["name"],
+          multiple: true,
+          min: 1,
+        }
       - { label: "Description", name: "description", widget: "string" }
+
+  - name: "categories"
+    label: "Catégories"
+    folder: "content/categories/"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {
+          label: "Layout",
+          name: "layout",
+          widget: "hidden",
+          default: "categories",
+        }
+      - { label: "Nom", name: "name", widget: "string" }
