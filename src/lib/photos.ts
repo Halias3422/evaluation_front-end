@@ -2,10 +2,7 @@ import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
 
-const photosDirectory = path.join(
-  process.cwd(),
-  "/content/photos/list-portrait/"
-);
+const photosDirectory = path.join(process.cwd(), "/content/photos/");
 
 export const getAllPhotos = async () => {
   const files = fs.readdirSync(photosDirectory);
