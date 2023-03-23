@@ -27,14 +27,14 @@ const Home = ({ photos }: { photos: any[] }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {photos.map((photo: any) => {
+        {photos.map((photo: any, index: number) => {
           return (
-            <>
+            <div key={index}>
               <p>{photo.title}</p>
               <p>{photo.date}</p>
               <Image src={photo.image} alt="alt" width="600" height="600" />
               <p>{photo.category}</p>
-            </>
+            </div>
           );
         })}
       </main>
