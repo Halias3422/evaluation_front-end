@@ -7,7 +7,7 @@ const DesktopNavbar = () => {
   return (
     <NavbarContainer>
       <InsideContainer>
-        <Logo width={148} height={148} />
+        <Logo dimensions={196} />
         <MainMenu />
         <Divider />
         <SocialLinks />

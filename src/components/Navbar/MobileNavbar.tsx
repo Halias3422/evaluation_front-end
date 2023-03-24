@@ -28,7 +28,7 @@ const MobileNavbar = () => {
   return (
     <>
       <NavbarContainer>
-        <Logo width={64} height={64} />
+        <Logo dimensions={96} />
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>
           <SvgHamburgerMenu />
         </HamburgerContainer>
