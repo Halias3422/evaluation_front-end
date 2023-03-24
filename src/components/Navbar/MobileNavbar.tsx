@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "./Logo";
 import { useEffect, useState } from "react";
 import MainMenu from "./Menu/MainMenu";
+import SocialLinks from "./Menu/SocialLinks";
 
 const MobileNavbar = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -34,6 +35,7 @@ const MobileNavbar = () => {
       </NavbarContainer>
       <MenuContainer id="menuContainer" $menuOpen={menuOpen}>
         <MainMenu />
+        <SocialLinks />
       </MenuContainer>
     </>
   );
@@ -54,7 +56,7 @@ const MenuContainer = styled.div<{ $menuOpen: boolean }>`
   overflow: hidden;
   display: none;
   border-radius: 0 0 16px 16px;
-  height: ${(props) => (props.$menuOpen ? `305px;` : `0px;`)};
+  height: ${(props) => (props.$menuOpen ? `365px;` : `0px;`)};
   border-bottom: 2px solid ${(props) => props.theme.white};
   background: ${(props) =>
     `linear-gradient(${props.theme.darkGrey}, ${props.theme.lightGrey})`};
@@ -67,12 +69,12 @@ const MenuContainer = styled.div<{ $menuOpen: boolean }>`
       height: 0px;
     }
     to {
-      height: 305px;
+      height: 365px;
     }
   }
   @keyframes closeMenu {
     from {
-      height: 305px;
+      height: 365px;
     }
     to {
       height: 0px;

@@ -9,6 +9,7 @@ const Logo = ({ width, height }: { width: number; height: number }) => {
       width={width}
       height={height}
       onClick={() => (window.location.href = "/")}
+      title="Retourner à l'Accueil"
     />
   );
 };
