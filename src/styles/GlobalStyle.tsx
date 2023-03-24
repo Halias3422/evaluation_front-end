@@ -7,8 +7,24 @@ const GlobalStyle = createGlobalStyle`
 	body,
 	div#__next {
 	margin: 0;
-	background-color: ${colorscheme.darkGrey}
+	background-color: ${colorscheme.darkGrey};
 	}
+
+	.mainTheme {
+	background-color: ${colorscheme.darkGrey};
+	color: ${colorscheme.white};
+}
+
+.link {
+text-decoration: none;
+color: ${colorscheme.white};
+width: fit-content;
+text-align: center;
+font-size: 24px;
+}
+
+
+
 `;
 
 export default GlobalStyle;

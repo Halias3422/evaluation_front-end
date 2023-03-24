@@ -1,4 +1,4 @@
-import { Abril_Fatface, Roboto, Patua_One, Copse } from "next/font/google";
+import { Abril_Fatface, Roboto, Patua_One, Copse } from "@next/font/google";
 
 export const abril = Abril_Fatface({
   weight: "400",
