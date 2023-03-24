@@ -13,6 +13,5 @@ export const getAllPhotos = async () => {
       ...photo,
     };
   });
-  console.log("parsedPhotos = " + JSON.stringify(parsedPhotos));
   return parsedPhotos;
 };

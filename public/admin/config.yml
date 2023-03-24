@@ -29,8 +29,8 @@ collections:
           time_format: true,
           format: "DD.MM.YYYY",
         }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Image grand format", name: "imageBig", widget: "image" }
+      - { label: "Image petit format", name: "imageSmall", widget: "image" }
       - {
           label: "Catégorie",
           name: "category",

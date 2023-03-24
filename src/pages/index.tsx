@@ -32,7 +32,12 @@ const Home = ({ photos }: { photos: any[] }) => {
             <div key={index}>
               <p>{photo.title}</p>
               <p>{photo.date}</p>
-              <Image src={photo.image} alt="alt" width="600" height="600" />
+              <Image
+                src={photo.imageSmall}
+                alt="alt"
+                width="600"
+                height="600"
+              />
               <p>{photo.category}</p>
             </div>
           );
