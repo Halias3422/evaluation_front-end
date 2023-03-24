@@ -6,7 +6,8 @@ const SocialLinks = () => {
   return (
     <SocialLinksContainer>
       <Link href="https://www.facebook.com/fake-page">
-        <Image
+        <SocialImage
+          className="objectHoverEffect"
           src="/facebook.webp"
           alt="facebook"
           width="52"
@@ -15,7 +16,8 @@ const SocialLinks = () => {
         />
       </Link>
       <Link href="https://www.instragram.com/fake-page">
-        <InstagramImage
+        <SocialImage
+          className="objectHoverEffect"
           src="/instagram.webp"
           alt="instagram"
           width="52"
@@ -28,14 +30,14 @@ const SocialLinks = () => {
 };
 
 const SocialLinksContainer = styled.div`
-  margin-top: 22px;
+  margin: 0 auto;
   width: 100%;
+  max-width: 200px;
   display: flex;
-  justify-content: center;
-  gap: 5%;
+  justify-content: space-evenly;
 `;
 
-const InstagramImage = styled(Image)`
+const SocialImage = styled(Image)`
   border-radius: 50%;
 `;
 

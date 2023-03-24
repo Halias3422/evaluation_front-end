@@ -22,7 +22,7 @@ const MobileNavbar = () => {
   useEffect(() => {
     const menu = document.getElementById("menuContainer") as HTMLDivElement;
     if (menuOpen && menu) {
-      menu.style.display = "block";
+      menu.style.display = "flex";
     }
   }, [menuOpen]);
   return (
@@ -55,6 +55,8 @@ const HamburgerContainer = styled.div`
 const MenuContainer = styled.div<{ $menuOpen: boolean }>`
   overflow: hidden;
   display: none;
+  flex-direction: column;
+  gap: 22px;
   border-radius: 0 0 16px 16px;
   height: ${(props) => (props.$menuOpen ? `365px;` : `0px;`)};
   border-bottom: 2px solid ${(props) => props.theme.white};

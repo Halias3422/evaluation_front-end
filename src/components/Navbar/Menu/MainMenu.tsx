@@ -5,20 +5,22 @@ import styled from "styled-components";
 const MainMenu = () => {
   return (
     <MainMenuContainer className={patua.className}>
-      <Link href="/galerie" className="link">
-        Galerie
+      <Link href="/galerie" className="link textHoverEffect">
+        <p>Galerie</p>
       </Link>
       <MenuDivider />
-      <Link href="/tarifs-et-prestations" className="link">
-        Tarifs
-        <br />
-        et
-        <br />
-        prestations
+      <Link href="/tarifs-et-prestations" className="link textHoverEffect">
+        <p>
+          Tarifs
+          <br />
+          et
+          <br />
+          prestations
+        </p>
       </Link>
       <MenuDivider />
-      <Link href="/contact" className="link">
-        Contact
+      <Link href="/contact" className="link textHoverEffect">
+        <p>Contact</p>
       </Link>
     </MainMenuContainer>
   );
