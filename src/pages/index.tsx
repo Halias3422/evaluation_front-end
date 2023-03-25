@@ -52,6 +52,10 @@ const BackgroundImage = styled.div<{ $backgroundPhoto: Photo }>`
 `;
 
 const TitleContainer = styled.div`
+  h1 {
+    margin: 0px;
+    line-height: 1.2;
+  }
   position: absolute;
   top: 0px;
   width: 100%;
