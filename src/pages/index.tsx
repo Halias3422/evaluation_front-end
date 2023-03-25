@@ -61,8 +61,21 @@ const TitleContainer = styled.div`
   align-items: center;
   text-align: center;
   font-size: 24px;
+  text-shadow: 0px 15px 10px ${(props) => props.theme.darkGrey};
   color: ${(props) => props.theme.white};
   background-color: rgba(0, 0, 0, 45%);
+  @media screen and (min-width: 769px) {
+    font-size: 36px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 42px;
+  }
+  @media screen and (min-width: 1200px) {
+    font-size: 46px;
+  }
+  @media screen and (min-width: 1400px) {
+    font-size: 60px;
+  }
 `;
 
 export const getStaticProps = async () => {

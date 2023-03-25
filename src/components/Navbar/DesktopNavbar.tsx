@@ -3,11 +3,11 @@ import Logo from "./Logo";
 import MainMenu from "./Menu/MainMenu";
 import SocialLinks from "./Menu/SocialLinks";
 
-const DesktopNavbar = () => {
+const DesktopNavbar = ({ docWidth }: { docWidth: number }) => {
   return (
     <NavbarContainer>
       <InsideContainer>
-        <Logo dimensions={196} />
+        <Logo dimensions={docWidth < 1200 ? 124 : 196} />
         <MainMenu />
         <Divider />
         <SocialLinks />
@@ -22,7 +22,10 @@ const NavbarContainer = styled.div`
   height: 100%;
   width: fit-content;
   display: flex;
-  gap: 60px;
+  gap: 40px;
+  @media screen and (min-width: 1200px) {
+    gap: 60px;
+  }
 `;
 
 const InsideContainer = styled.div`

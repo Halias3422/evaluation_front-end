@@ -15,7 +15,6 @@ const Logo = ({ dimensions }: { dimensions: number }) => {
     </LogoContainer>
   );
 };
-
 const LogoContainer = styled.div<{ $dimensions: number }>`
   border-radius: 50%;
   display: flex;

@@ -21,7 +21,11 @@ const Navbar = () => {
 
   return (
     <Header id="headerElement" className={isHome ? "appearingObject" : ""}>
-      {docWidth < 769 ? <MobileNavbar /> : <DesktopNavbar />}
+      {docWidth < 1024 ? (
+        <MobileNavbar />
+      ) : (
+        <DesktopNavbar docWidth={docWidth} />
+      )}
     </Header>
   );
 };
@@ -31,7 +35,7 @@ const Header = styled.header`
   position: fixed;
   width: 100%;
   z-index: 10;
-  @media screen and (min-width: 769px) {
+  @media screen and (min-width: 1024px) {
     width: fit-content;
   }
 `;

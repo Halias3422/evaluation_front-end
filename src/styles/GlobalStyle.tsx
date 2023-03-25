@@ -22,7 +22,7 @@ text-decoration: none;
 color: ${colorscheme.white};
 width: fit-content;
 text-align: center;
-font-size: 24px;
+font-size: 20px;
 }
 
 .textHoverEffect, .objectHoverEffect {
@@ -56,6 +56,20 @@ animation: 1s ease-in 0.5s appearingObject forwards;
 }
 }
 
+@media screen and (min-width: 769px) {
+}
+
+@media screen and (min-width: 1024px) {
+	.link {
+	font-size: 22px;
+}
+
+@media screen and (min-width: 1200px) {
+	.link {
+	font-size: 24px;
+}
+}
+}
 
 
 
