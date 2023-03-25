@@ -5,7 +5,8 @@ const GlobalStyle = createGlobalStyle`
 
 	html,
 	body,
-	div#__next {
+	div#__next,
+	main {
 	margin: 0;
 	background-color: ${colorscheme.darkGrey};
 	height: 100%;
@@ -42,6 +43,19 @@ text-shadow: 10px 10px 15px black;
 top: -10px;
 box-shadow: 0px 10px 10px black;
 }
+
+.appearingObject {
+	opacity: 0;
+animation: 1s ease-in 0.5s appearingObject forwards;
+@keyframes appearingObject {
+	from {
+	opacity: 0;
+} to {
+	opacity: 1;
+}
+}
+}
+
 
 
 

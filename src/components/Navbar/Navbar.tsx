@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
 import DesktopNavbar from "./DesktopNavbar";
+import styled from "styled-components";
 
 const Navbar = () => {
   const [docWidth, setDocWidth] = useState<number>(-1);
+  const [isHome, setIsHome] = useState<boolean>(false);
 
   const resizeNavbar = () => {
     setDocWidth(document.documentElement.clientWidth);
@@ -12,15 +14,25 @@ const Navbar = () => {
   useEffect(() => {
     addEventListener("resize", () => resizeNavbar());
     resizeNavbar();
+    if (window.location.pathname === "/") {
+      setIsHome(true);
+    }
   }, []);
 
-  if (docWidth == -1) {
-    return <></>;
-  }
-
   return (
-    <header>{docWidth < 769 ? <MobileNavbar /> : <DesktopNavbar />}</header>
+    <Header id="headerElement" className={isHome ? "appearingObject" : ""}>
+      {docWidth < 769 ? <MobileNavbar /> : <DesktopNavbar />}
+    </Header>
   );
 };
 
+const Header = styled.header`
+  opacity: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  @media screen and (min-width: 769px) {
+    width: fit-content;
+  }
+`;
 export default Navbar;

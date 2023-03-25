@@ -7,6 +7,7 @@ import SocialLinks from "./Menu/SocialLinks";
 
 const MobileNavbar = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [isHome, setIsHome] = useState<boolean>(false);
 
   useEffect(() => {
     const menu = document.getElementById("menuContainer") as HTMLDivElement;
@@ -17,6 +18,9 @@ const MobileNavbar = () => {
         }
       });
     }
+    if (window.location.pathname === "/") {
+      setIsHome(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -25,15 +29,16 @@ const MobileNavbar = () => {
       menu.style.display = "flex";
     }
   }, [menuOpen]);
+
   return (
     <>
-      <NavbarContainer>
+      <NavbarContainer $setBackground={isHome && menuOpen}>
         <Logo dimensions={96} />
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>
           <SvgHamburgerMenu />
         </HamburgerContainer>
       </NavbarContainer>
-      <MenuContainer id="menuContainer" $menuOpen={menuOpen}>
+      <MenuContainer id="menuContainer" $menuOpen={menuOpen} $isHome={isHome}>
         <MainMenu />
         <SocialLinks />
       </MenuContainer>
@@ -41,45 +46,72 @@ const MobileNavbar = () => {
   );
 };
 
-const NavbarContainer = styled.div`
+const NavbarContainer = styled.div<{ $setBackground: boolean }>`
   display: flex;
+  position: sticky;
   justify-content: space-between;
   align-items: center;
   padding: 5%;
+		${(props) =>
+      props.$setBackground
+        ? `animation: color-background ease-out 0.6s forwards;`
+        : `animation: uncolor-background ease-out 0.6s`};
+	@keyframes color-background {
+		from {
+			background-color: rgba(0, 0, 0, 0);
+		}
+		to {
+			background-color: ${(props) => props.theme.darkGrey};
+		}
+		}
+	@keyframes uncolor-background {
+		from {
+			background-color: ${(props) => props.theme.darkGrey};
+		}
+		to {
+			background-color: rgba(0, 0, 0, 0);
+		}
+
+	}
+  }
 `;
 
 const HamburgerContainer = styled.div`
   cursor: pointer;
 `;
 
-const MenuContainer = styled.div<{ $menuOpen: boolean }>`
+const MenuContainer = styled.div<{ $menuOpen: boolean; $isHome: boolean }>`
   overflow: hidden;
   display: none;
   flex-direction: column;
-  gap: 22px;
+  gap: 42px;
   border-radius: 0 0 16px 16px;
-  height: ${(props) => (props.$menuOpen ? `365px;` : `0px;`)};
+  height: ${(props) => (props.$menuOpen ? `375px;` : `0px;`)};
   border-bottom: 2px solid ${(props) => props.theme.white};
   background: ${(props) =>
     `linear-gradient(${props.theme.darkGrey}, ${props.theme.lightGrey})`};
   ${(props) =>
     props.$menuOpen
-      ? `animation openMenu ease-out 0.6s;`
-      : `animation closeMenu ease-out 0.4s;`};
+      ? `animation openMenu ease-out 0.6s forwards;`
+      : `animation closeMenu ease-out 0.6s;`};
   @keyframes openMenu {
     from {
       height: 0px;
+      opacity: 0;
     }
     to {
-      height: 365px;
+      height: 375px;
+      opacity: 1;
     }
   }
   @keyframes closeMenu {
     from {
-      height: 365px;
+      height: 375px;
+      opacity: 1;
     }
     to {
       height: 0px;
+      opacity: 0;
     }
   }
 `;

@@ -4,6 +4,12 @@ import path from "path";
 
 const photosDirectory = path.join(process.cwd(), "/content/photos/");
 
+export const getOnePhotoByFileName = async (fileName: string) => {
+  const allPhotos = await getAllPhotos();
+  const photo = allPhotos.filter((file) => file.title.startsWith(fileName))[0];
+  return photo;
+};
+
 export const getAllPhotos = async () => {
   const files = fs.readdirSync(photosDirectory);
   const parsedPhotos = files.map((photoFile) => {
