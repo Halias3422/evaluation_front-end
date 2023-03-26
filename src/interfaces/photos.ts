@@ -1,7 +1,15 @@
 export interface Photo {
   title: string;
   date: string;
-  imageBig: File;
-  imageSmall: File;
+  imageBig: {
+    image: string;
+    width: number;
+    height: number;
+  };
+  imageSmall: {
+    image: string;
+    width: number;
+    height: number;
+  };
   category: string;
 }

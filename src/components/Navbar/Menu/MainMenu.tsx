@@ -1,28 +1,25 @@
+import PageContext from "@/context/pageContext";
 import { pagesPaths } from "@/interfaces/pages";
-import Galerie from "@/pages/galerie";
 import { patua } from "@/styles/fonts";
-import { AppProps } from "next/app";
 import Link from "next/link";
-import { MouseEvent } from "react";
+import { MouseEvent, useContext } from "react";
 import styled from "styled-components";
 
-const MainMenu = ({ pageProps }: AppProps) => {
-  const displayRightPageContent = (pathname: string) => {
-    switch (pathname) {
-      case pagesPaths.galery:
-        return <Galerie {...pageProps} />;
-      case pagesPaths.tarification:
-        return <></>;
-      case pagesPaths.contact:
-        return <></>;
-      default:
-        return <></>;
-    }
-  };
+const MainMenu = () => {
+  const { pageContext, setPageContext } = useContext(PageContext);
 
   const handlePageClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    displayRightPageContent(event.currentTarget.pathname);
+    Object.values(pagesPaths).map((path) => {
+      if (path === event.currentTarget.pathname) {
+        setPageContext({
+          ...pageContext,
+          contextLoaded: true,
+          previousPath: window.location.pathname,
+          currentPath: event.currentTarget.pathname,
+        });
+      }
+    });
   };
 
   return (

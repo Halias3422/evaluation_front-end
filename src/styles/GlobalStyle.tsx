@@ -56,6 +56,95 @@ animation: 1s ease-in 0.5s appearingObject forwards;
 }
 }
 
+.slideOutUp {
+position: absolute;
+top: 0px;
+	animation: 1.2s ease-in slide-in-from-top reverse forwards;
+}
+
+.slideInUp {
+position: absolute;
+top: 0px;
+	animation: 1.2s ease-out slide-in-from-top forwards;
+}
+
+.slideInDown {
+position: absolute;
+bottom: 0px;
+animation: 1.2s ease-out slide-in-from-down forwards;
+}
+
+.slideOutDown {
+position: absolute;
+bottom: 0px;
+animation: 1.2s ease-out slide-in-from-down reverse ;
+}
+
+.slideInLeft {
+position: absolute;
+left: 0px;
+animation: 1.2s ease-out slide-in-from-left forwards;
+}
+
+.slideOutLeft {
+position: absolute;
+left: 0px;
+animation: 1.2s ease-out slide-in-from-left reverse forwards;
+}
+
+.slideInRight {
+position: absolute;
+right: 0px;
+animation: 1.2s ease-out slide-in-from-right forwards;
+}
+
+.slideOutRight {
+position: absolute;
+right: 0px;
+animation: 1.2s ease-out slide-in-from-right reverse forwards;
+}
+
+
+@keyframes slide-in-from-down {
+	from {
+		height: 0%;
+}
+	to {
+		height: 100%;
+}
+
+}
+
+@keyframes slide-in-from-top {
+	from {
+		height: 0%;
+}
+	to {
+		height: 100%;
+}
+
+}
+
+@keyframes slide-in-from-left {
+	from {
+		height: 0%;
+}
+	to {
+		height: 100%;
+}
+
+}
+
+@keyframes slide-in-from-right {
+	from {
+		height: 0%;
+}
+	to {
+		height: 100%;
+}
+
+}
+
 @media screen and (min-width: 769px) {
 }
 

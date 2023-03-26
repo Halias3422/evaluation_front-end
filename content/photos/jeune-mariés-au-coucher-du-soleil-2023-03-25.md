@@ -1,6 +1,6 @@
 ---
 layout: photos
-title: Jeune mariés au coucher du soleil
+title: Jeunes mariés au coucher du soleil
 date: 25.03.2023
 imageSmall:
   image: /images/couple-sunset-640.jpg

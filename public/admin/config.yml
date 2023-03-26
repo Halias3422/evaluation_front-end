@@ -19,29 +19,54 @@ collections:
     create: true
     slug: "{{title}}-{{year}}-{{month}}-{{day}}"
     fields:
-      - { label: "Layout", name: "layout", widget: "hidden", default: "photos" }
-      - { label: "Titre", name: "title", widget: "string" }
-      - {
-          label: "Date de publication",
-          name: "date",
-          widget: "datetime",
-          date_format: "DD.MM.YYYY",
-          time_format: true,
-          format: "DD.MM.YYYY",
-        }
-      - { label: "Image grand format", name: "imageBig", widget: "image" }
-      - { label: "Image petit format", name: "imageSmall", widget: "image" }
-      - {
-          label: "Catégorie",
-          name: "category",
-          widget: "relation",
-          collection: "categories",
-          value_field: "name",
-          search_fields: ["name"],
-          multiple: true,
-          min: 1,
-          max: 1,
-        }
+      - label: "Layout"
+        name: "layout"
+        widget: "hidden"
+        default: "photos"
+      - label: "Titre"
+        name: "title"
+        widget: "string"
+      - label: "Date de publication"
+        name: "date"
+        widget: "datetime"
+        date_format: "DD.MM.YYYY"
+        time_format: true
+        format: "DD.MM.YYYY"
+      - label: "Image petit format"
+        name: "imageSmall"
+        widget: "object"
+        fields:
+          - label: "image"
+            name: "image"
+            widget: "image"
+          - label: "largeur"
+            name: "width"
+            widget: "number"
+          - label: "hauteur"
+            name: "height"
+            widget: "number"
+      - label: "Image grand format"
+        name: "imageBig"
+        widget: "object"
+        fields:
+          - label: "image"
+            name: "image"
+            widget: "image"
+          - label: "largeur"
+            name: "width"
+            widget: "number"
+          - label: "hauteur"
+            name: "height"
+            widget: "number"
+      - label: "Catégorie"
+        name: "category"
+        widget: "relation"
+        collection: "categories"
+        value_field: "name"
+        search_fields: ["name"]
+        multiple: true
+        min: 1
+        max: 1
 
   - name: "categories"
     label: "Catégories"
@@ -49,10 +74,10 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {
-          label: "Layout",
-          name: "layout",
-          widget: "hidden",
-          default: "categories",
-        }
-      - { label: "Nom", name: "name", widget: "string" }
+      - label: "Layout"
+        name: "layout"
+        widget: "hidden"
+        default: "categories"
+      - label: "Nom"
+        name: "name"
+        widget: "string"

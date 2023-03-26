@@ -12,12 +12,14 @@ export const getOnePhotoByFileName = async (fileName: string) => {
 
 export const getAllPhotos = async () => {
   const files = fs.readdirSync(photosDirectory);
-  const parsedPhotos = files.map((photoFile) => {
-    const readFile = fs.readFileSync(photosDirectory + photoFile, "utf-8");
-    const { data: photo } = matter(readFile);
-    return {
-      ...photo,
-    };
-  });
+  const parsedPhotos = await Promise.all(
+    files.map(async (photoFile) => {
+      const readFile = fs.readFileSync(photosDirectory + photoFile, "utf-8");
+      const { data: photo } = matter(readFile);
+      return {
+        ...photo,
+      };
+    })
+  );
   return parsedPhotos;
 };

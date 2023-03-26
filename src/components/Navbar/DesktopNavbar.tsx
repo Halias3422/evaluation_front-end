@@ -2,12 +2,13 @@ import styled from "styled-components";
 import Logo from "./Logo";
 import MainMenu from "./Menu/MainMenu";
 import SocialLinks from "./Menu/SocialLinks";
+import { Dispatch, SetStateAction } from "react";
 
 const DesktopNavbar = ({ docWidth }: { docWidth: number }) => {
   return (
     <NavbarContainer>
       <InsideContainer>
-        <Logo dimensions={docWidth < 1200 ? 124 : 196} />
+        <Logo dimensions={docWidth < 1400 ? 124 : 196} />
         <MainMenu />
         <Divider />
         <SocialLinks />
