@@ -2,13 +2,18 @@ import PageContext from "@/context/pageContext";
 import { pagesPaths } from "@/interfaces/pages";
 import { patua } from "@/styles/fonts";
 import Link from "next/link";
-import { MouseEvent, useContext } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useContext } from "react";
 import styled from "styled-components";
 
-const MainMenu = () => {
+const MainMenu = ({
+  setMenuOpen,
+}: {
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const { pageContext, setPageContext } = useContext(PageContext);
 
   const handlePageClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    setMenuOpen(false);
     event.preventDefault();
     Object.values(pagesPaths).map((path) => {
       if (path === event.currentTarget.pathname) {

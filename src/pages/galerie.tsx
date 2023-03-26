@@ -14,13 +14,16 @@ const Galerie = ({
   useEffect(() => {
     const galleryContainer = document.getElementById("galeryPage");
     if (galleryContainer) {
-      galleryContainer.addEventListener("animationend", () => {
-        if (galleryContainer.offsetHeight === 0) {
+      galleryContainer.addEventListener("animationend", (e) => {
+        if (
+          galleryContainer.offsetHeight === 0 &&
+          galleryContainer.className.includes("slideOut")
+        ) {
           galleryContainer.style.display = "none";
         }
       });
       galleryContainer.addEventListener("animationstart", () => {
-        if (galleryContainer.offsetHeight === 0) {
+        if (galleryContainer.className.includes("slideIn")) {
           galleryContainer.style.display = "block";
           galleryContainer.style.overflow = "scroll";
         }

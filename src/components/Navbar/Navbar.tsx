@@ -45,10 +45,11 @@ const Navbar = ({
     <Header
       id="headerElement"
       $isHome={isHome}
+      $docWidth={docWidth}
       className={isHome ? "appearingObject" : ""}
     >
       {docWidth < 1024 ? (
-        <MobileNavbar />
+        <MobileNavbar isHome={isHome} />
       ) : (
         <DesktopNavbar docWidth={docWidth} />
       )}
@@ -56,8 +57,8 @@ const Navbar = ({
   );
 };
 
-const Header = styled.header<{ $isHome: boolean }>`
-  opacity: ${(props) => (props.$isHome ? 0 : 1)};
+const Header = styled.header<{ $isHome: boolean; $docWidth: number }>`
+  opacity: ${(props) => (!props.$isHome && props.$docWidth > -1 ? "1" : "0")};
   position: fixed;
   width: 100%;
   z-index: 10;

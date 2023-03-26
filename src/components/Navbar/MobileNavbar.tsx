@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import MainMenu from "./Menu/MainMenu";
 import SocialLinks from "./Menu/SocialLinks";
 
-const MobileNavbar = () => {
+const MobileNavbar = ({ isHome }: { isHome: boolean }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [isHome, setIsHome] = useState<boolean>(false);
+  const [$isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsLoaded(true);
     const menu = document.getElementById("menuContainer") as HTMLDivElement;
     if (menu) {
       menu.addEventListener("animationend", (e) => {
@@ -17,9 +18,14 @@ const MobileNavbar = () => {
           menu.style.display = "none";
         }
       });
-    }
-    if (window.location.pathname === "/") {
-      setIsHome(true);
+      document.addEventListener("click", (e) => {
+        const header = document.getElementById("headerElement");
+        if (header && menuOpen) {
+          if (!header.contains(e.target as HTMLElement) || !e.target) {
+            setMenuOpen(false);
+          }
+        }
+      });
     }
   }, []);
 
@@ -32,30 +38,42 @@ const MobileNavbar = () => {
 
   return (
     <>
-      <NavbarContainer $setBackground={isHome && menuOpen}>
-        <Logo dimensions={96} />
+      <NavbarContainer
+        $menuOpen={menuOpen}
+        $isHome={isHome}
+        $isLoaded={$isLoaded}
+      >
+        <Logo />
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>
           <SvgHamburgerMenu />
         </HamburgerContainer>
       </NavbarContainer>
       <MenuContainer id="menuContainer" $menuOpen={menuOpen} $isHome={isHome}>
-        <MainMenu />
+        <MainMenu setMenuOpen={setMenuOpen} />
         <SocialLinks />
       </MenuContainer>
     </>
   );
 };
 
-const NavbarContainer = styled.div<{ $setBackground: boolean }>`
+const NavbarContainer = styled.div<{
+  $menuOpen: boolean;
+  $isHome: boolean;
+  $isLoaded: boolean;
+}>`
   display: flex;
   position: sticky;
   justify-content: space-between;
   align-items: center;
-  padding: 5%;
+  padding: 2% 5%;
 		${(props) =>
-      props.$setBackground
+      props.$menuOpen && props.$isHome
         ? `animation: color-background ease-out 0.6s forwards;`
-        : `animation: uncolor-background ease-out 0.6s`};
+        : props.$isHome && `animation: uncolor-background ease-out 0.6s`};
+	${(props) =>
+    props.$isLoaded && !props.$isHome
+      ? `background-color: ${props.theme.darkGrey};`
+      : "background-color: unset;"};
 	@keyframes color-background {
 		from {
 			background-color: rgba(0, 0, 0, 0);
