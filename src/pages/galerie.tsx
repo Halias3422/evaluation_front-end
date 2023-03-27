@@ -14,18 +14,29 @@ const Galerie = ({
   useEffect(() => {
     const galleryContainer = document.getElementById("galeryPage");
     if (galleryContainer) {
-      galleryContainer.addEventListener("animationend", (e) => {
+      galleryContainer.addEventListener("animationend", () => {
         if (
           galleryContainer.offsetHeight === 0 &&
           galleryContainer.className.includes("slideOut")
         ) {
           galleryContainer.style.display = "none";
+        } else if (galleryContainer.className.includes("slideIn")) {
         }
       });
       galleryContainer.addEventListener("animationstart", () => {
         if (galleryContainer.className.includes("slideIn")) {
           galleryContainer.style.display = "block";
-          galleryContainer.style.overflow = "scroll";
+          galleryContainer.style.overflowY = "scroll";
+          if (document.documentElement.offsetWidth > 1024) {
+            galleryContainer.style.width = `calc(100% - ${
+              document.getElementById("headerElement")?.offsetWidth
+            }px`;
+          }
+        }
+      });
+      window.addEventListener("resize", () => {
+        if (document.documentElement.offsetWidth < 1024) {
+          galleryContainer.style.width = "100%";
         }
       });
     }
@@ -61,18 +72,12 @@ const Galerie = ({
 };
 
 const GalleryContainer = styled.div<{ $offsetLeft: number }>`
+  width: 100%;
   display: none;
-  height: fit-content;
   overflow: hidden;
-  @media and screen (min-width: 1024px) {
-    float: right;
-    width: ${(props) => `calc(100% - ${props.$offsetLeft}px)`};
-  }
 `;
 
 const PhotosContainer = styled.div`
-  width: 90%;
-  height: 100%;
   max-width: 1400px;
   margin: 0 auto;
   margin-top: 150px;

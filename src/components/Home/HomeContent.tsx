@@ -34,6 +34,8 @@ const HomeContent = ({ backgroundPhoto }: { backgroundPhoto: Photo }) => {
 };
 
 const HomeContentContainer = styled.div`
+  position: absolute;
+  left: 0px;
   width: 100%;
   height: 100%;
   overflow: hidden;

@@ -10,13 +10,17 @@ import Galerie from "./galerie";
 import { pagesComponentsInfo } from "@/interfaces/pages";
 import NotFound from "./404";
 import { setSlideClass, slideClassesList } from "@/interfaces/transitions";
+import styled from "styled-components";
+import { getAllCategories } from "@/lib/categories";
+import { Category } from "@/interfaces/categories";
 
 interface HomeProps {
   backgroundPhoto: Photo;
   photos: Photo[];
+  categories: Category[];
 }
 const Home = ({ ...props }: HomeProps) => {
-  const { backgroundPhoto, photos } = props;
+  const { backgroundPhoto, photos, categories } = props;
   const { pageContext, setPageContext } = useContext(PageContext);
   const [navbarWidth, setNavbarWidth] = useState<number>(0);
 
@@ -77,24 +81,36 @@ const Home = ({ ...props }: HomeProps) => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Navbar setNavbarWidth={setNavbarWidth} />
-      <main>
-        <HomeContent backgroundPhoto={backgroundPhoto} />
-        <Galerie photos={photos} offsetLeft={navbarWidth} />
-      </main>
+      <ContentContainer>
+        <Navbar setNavbarWidth={setNavbarWidth} categories={categories} />
+        <main>
+          <HomeContent backgroundPhoto={backgroundPhoto} />
+          <Galerie photos={photos} offsetLeft={navbarWidth} />
+        </main>
+      </ContentContainer>
     </>
   );
 };
+
+const ContentContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  @media screen and (min-width: 1024px) {
+    display: flex;
+  }
+`;
 
 export const getStaticProps = async () => {
   const backgroundPhoto = await getOnePhotoByFileName(
     "Jeunes mariés au coucher du soleil"
   );
   const photos = await getAllPhotos();
+  const categories = await getAllCategories();
   return {
     props: {
       photos,
       backgroundPhoto,
+      categories,
     },
   };
 };

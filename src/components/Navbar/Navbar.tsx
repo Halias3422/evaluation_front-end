@@ -9,11 +9,14 @@ import MobileNavbar from "./MobileNavbar";
 import DesktopNavbar from "./DesktopNavbar";
 import styled from "styled-components";
 import PageContext from "@/context/pageContext";
+import { Category } from "@/interfaces/categories";
 
 const Navbar = ({
   setNavbarWidth,
+  categories,
 }: {
   setNavbarWidth: Dispatch<SetStateAction<number>>;
+  categories: Category[];
 }) => {
   const [docWidth, setDocWidth] = useState<number>(-1);
   const [isHome, setIsHome] = useState<boolean>(false);
@@ -49,9 +52,13 @@ const Navbar = ({
       className={isHome ? "appearingObject" : ""}
     >
       {docWidth < 1024 ? (
-        <MobileNavbar isHome={isHome} />
+        <MobileNavbar
+          isHome={isHome}
+          categories={categories}
+          docWidth={docWidth}
+        />
       ) : (
-        <DesktopNavbar docWidth={docWidth} />
+        <DesktopNavbar categories={categories} docWidth={docWidth} />
       )}
     </Header>
   );
@@ -65,7 +72,6 @@ const Header = styled.header<{ $isHome: boolean; $docWidth: number }>`
   @media screen and (min-width: 1024px) {
     width: fit-content;
     position: ${(props) => (props.$isHome ? `fixed` : "sticky")};
-    float: ${(props) => (props.$isHome ? "unset" : "left")};
   }
 `;
 export default Navbar;

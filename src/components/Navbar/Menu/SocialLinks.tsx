@@ -31,6 +31,7 @@ const SocialLinks = () => {
 
 const SocialLinksContainer = styled.div`
   margin: 0 auto;
+  margin-top: 20px;
   width: 100%;
   max-width: 200px;
   display: flex;

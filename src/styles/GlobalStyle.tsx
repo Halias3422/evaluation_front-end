@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 	margin: 0;
 	background-color: ${colorscheme.darkGrey};
 	height: 100%;
+width: 100%;
 	}
 
 	.mainTheme {
@@ -23,6 +24,7 @@ color: ${colorscheme.white};
 width: fit-content;
 text-align: center;
 font-size: 20px;
+font-weight: 400;
 }
 
 .textHoverEffect, .objectHoverEffect {
@@ -56,6 +58,12 @@ animation: 1s ease-in 0.5s appearingObject forwards;
 }
 }
 
+.selectedCategoryMenu {
+	background-color: ${colorscheme.white};
+	border-radius: 8px;
+	color: ${colorscheme.darkGrey};
+}
+
 .slideOutUp {
 position: absolute;
 top: 0px;
@@ -65,6 +73,8 @@ top: 0px;
 .slideInUp {
 position: absolute;
 top: 0px;
+margin-top: 150px;
+margin-bottom: 150px;
 	animation: 1.2s ease-out slide-in-from-top forwards;
 }
 
@@ -156,6 +166,11 @@ animation: 1.2s ease-out slide-in-from-right reverse forwards;
 @media screen and (min-width: 1200px) {
 	.link {
 	font-size: 24px;
+}
+@media screen and (min-width: 1800px) {
+	.link {
+	font-size: 26px;
+}
 }
 }
 }

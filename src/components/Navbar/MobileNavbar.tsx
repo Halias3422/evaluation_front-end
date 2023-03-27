@@ -2,10 +2,18 @@ import SvgHamburgerMenu from "@/svgs/HamburgerMenu";
 import styled from "styled-components";
 import Logo from "./Logo";
 import { useEffect, useState } from "react";
-import MainMenu from "./Menu/MainMenu";
-import SocialLinks from "./Menu/SocialLinks";
+import Menu from "./Menu/Menu";
+import { Category } from "@/interfaces/categories";
 
-const MobileNavbar = ({ isHome }: { isHome: boolean }) => {
+const MobileNavbar = ({
+  isHome,
+  categories,
+  docWidth,
+}: {
+  isHome: boolean;
+  categories: Category[];
+  docWidth: number;
+}) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [$isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -49,8 +57,11 @@ const MobileNavbar = ({ isHome }: { isHome: boolean }) => {
         </HamburgerContainer>
       </NavbarContainer>
       <MenuContainer id="menuContainer" $menuOpen={menuOpen} $isHome={isHome}>
-        <MainMenu setMenuOpen={setMenuOpen} />
-        <SocialLinks />
+        <Menu
+          setMenuOpen={setMenuOpen}
+          categories={categories}
+          docWidth={docWidth}
+        />
       </MenuContainer>
     </>
   );
