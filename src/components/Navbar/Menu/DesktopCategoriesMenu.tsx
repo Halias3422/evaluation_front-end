@@ -37,12 +37,12 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
   }, []);
 
   return (
-    <CategoriesContainer>
-      <Title className="link">Catégories</Title>
+    <CategoriesContainer className="appearingWidthObject">
+      <Title className="link appearingWidthObject">Catégories</Title>
       <CategoryMenuItem
         id="allCategories"
         href="/galerie"
-        className="link"
+        className="link textHoverEffect appearingWidthObject"
         onClick={(e) => handleCategoryMenuClick(e)}
       >
         Toutes
@@ -51,7 +51,7 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
         return (
           <CategoryMenuItem
             href={`/categorie/${category.name}`}
-            className="link"
+            className="link textHoverEffect appearingWidthObject"
             key={category.name + index}
             id={category.name + index}
             onClick={(e) => handleCategoryMenuClick(e)}
@@ -70,31 +70,30 @@ const CategoriesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
   border: ${(props) => `1px solid ${props.theme.white}`};
   border-radius: 6px;
-  overflow: hidden;
   margin-bottom: 12px;
+  overflow: hidden;
 `;
 
 const Title = styled.h3`
   margin: 0px;
   margin-bottom: 4px;
-  padding: 15px 34px;
+  padding: 10px 35px;
   background-color: ${(props) => props.theme.lightGrey};
   width: 100%;
 `;
 
 const CategoryMenuItem = styled(Link)`
-  width: 95%;
-  font-size: 18px;
+  font-size: 18px; !important
   text-align: center;
   padding: 12px 0px;
   @media screen and (min-width: 1024px) {
-    font-size: 20px;
+    font-size: 20px; !important
   }
   @media screen and (min-width: 1200px) {
-    font-size: 22px;
+    font-size: 22px; !important
   }
 `;
 

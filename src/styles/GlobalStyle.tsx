@@ -21,7 +21,7 @@ width: 100%;
 .link {
 text-decoration: none;
 color: ${colorscheme.white};
-width: fit-content;
+width: 95%;
 text-align: center;
 font-size: 20px;
 font-weight: 400;
@@ -54,6 +54,18 @@ animation: 1s ease-in 0.5s appearingObject forwards;
 	opacity: 0;
 } to {
 	opacity: 1;
+}
+}
+}
+
+.appearingWidthObject {
+	height: 0px;
+	animation: 1s ease-in appearing-width-object forwards;
+@keyframes appearing-width-object {
+	from {
+height: 0px;
+} to {
+	height: 100%;
 }
 }
 }
