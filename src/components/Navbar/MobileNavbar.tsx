@@ -1,9 +1,12 @@
 import SvgHamburgerMenu from "@/svgs/HamburgerMenu";
 import styled from "styled-components";
 import Logo from "./Logo";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Menu from "./Menu/Menu";
 import { Category } from "@/interfaces/categories";
+import MobileCategoriesMenu from "./Menu/MobileCategoriesMenu";
+import PageContext from "@/context/pageContext";
+import { pagesPaths } from "@/interfaces/pages";
 
 const MobileNavbar = ({
   isHome,
@@ -16,6 +19,7 @@ const MobileNavbar = ({
 }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [$isLoaded, setIsLoaded] = useState<boolean>(false);
+  const { pageContext } = useContext(PageContext);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -52,6 +56,9 @@ const MobileNavbar = ({
         $isLoaded={$isLoaded}
       >
         <Logo />
+        {pageContext.currentPath.includes(pagesPaths.galery) && (
+          <MobileCategoriesMenu categories={categories} />
+        )}
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>
           <SvgHamburgerMenu />
         </HamburgerContainer>

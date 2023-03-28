@@ -37,12 +37,9 @@ const Menu = ({
   return (
     <MenuContainer className={patua.className}>
       <CommonLinks handlePageClick={handlePageClick} />
-      {pageContext.currentPath.includes("galerie") &&
-        (docWidth > 1024 ? (
-          <DesktopCategoriesMenu categories={categories} />
-        ) : (
-          <></>
-        ))}
+      {pageContext.currentPath.includes("galerie") && docWidth > 1024 && (
+        <DesktopCategoriesMenu categories={categories} />
+      )}
       <SocialLinks />
     </MenuContainer>
   );
