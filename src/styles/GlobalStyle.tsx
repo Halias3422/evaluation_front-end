@@ -59,14 +59,17 @@ animation: 1s ease-in 0.5s appearingObject forwards;
 }
 
 .appearingWidthObject {
-	height: 0px;
-	animation: 1s ease-in appearing-width-object forwards;
+	opacity: 0;
+	animation: 0.8s ease-in appearing-width-object forwards;
+}
+
 @keyframes appearing-width-object {
 	from {
-height: 0px;
+width: 0px;
+opacity: 0;
 } to {
-	height: 100%;
-}
+width: 100%;
+opacity: 1;
 }
 }
 

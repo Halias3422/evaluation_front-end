@@ -28,6 +28,7 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
     allCategoriesMenus.push(
       document.getElementById("allCategories") as HTMLElement
     );
+    allCategoriesMenus[0].classList.add("selectedCategoryMenu");
     categories.map((category: Category, index: number) => {
       allCategoriesMenus.push(
         document.getElementById(category.name + index) as HTMLElement
@@ -38,7 +39,7 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
 
   return (
     <CategoriesContainer className="appearingWidthObject">
-      <Title className="link appearingWidthObject">Catégories</Title>
+      <Title className="link ">Catégories</Title>
       <CategoryMenuItem
         id="allCategories"
         href="/galerie"
@@ -80,20 +81,32 @@ const CategoriesContainer = styled.div`
 const Title = styled.h3`
   margin: 0px;
   margin-bottom: 4px;
-  padding: 10px 35px;
   background-color: ${(props) => props.theme.lightGrey};
   width: 100%;
+  animation: 0.1s appearing-padding forwards,
+    0.8s ease-in appearing-width-object;
+  @keyframes appearing-padding {
+    from {
+      padding: 0px;
+    }
+    to {
+      padding: 10px 35px;
+    }
+  }
 `;
 
 const CategoryMenuItem = styled(Link)`
-  font-size: 18px; !important
+  font-size: 18px !important;
   text-align: center;
   padding: 12px 0px;
+  animation: 0.8s ease-in appearing-width-object;
+  width: 95% !important;
+  opacity: 1;
   @media screen and (min-width: 1024px) {
-    font-size: 20px; !important
+    font-size: 20px !important;
   }
   @media screen and (min-width: 1200px) {
-    font-size: 22px; !important
+    font-size: 22px !important;
   }
 `;
 
