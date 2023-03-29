@@ -21,10 +21,15 @@ width: 100%;
 .link {
 text-decoration: none;
 color: ${colorscheme.white};
-width: 95%;
+width: 100%;
 text-align: center;
 font-size: 20px;
 font-weight: 400;
+p {
+padding: 15px 35px;
+border: 1px solid transparent;
+margin: 0px;
+}
 }
 
 .textHoverEffect, .objectHoverEffect {
@@ -58,19 +63,24 @@ animation: 1s ease-in 0.5s appearingObject forwards;
 }
 }
 
-.appearingWidthObject {
+.appearingHeightObject {
 	opacity: 0;
-	animation: 0.8s ease-in appearing-width-object forwards;
+	animation: 1.8s ease-in-out appearing-height-object forwards;
 }
 
-@keyframes appearing-width-object {
+@keyframes appearing-height-object {
 	from {
-width: 0px;
+height: 0px;
 opacity: 0;
 } to {
-width: 100%;
+height: 100%;
 opacity: 1;
 }
+}
+
+.selectedMenuLink {
+	border: 1px solid ${colorscheme.white} !important;
+	border-radius: 8px;
 }
 
 .selectedCategoryMenu {
@@ -185,6 +195,7 @@ animation: 1.2s ease-out slide-in-from-right reverse forwards;
 @media screen and (min-width: 1800px) {
 	.link {
 	font-size: 26px;
+	min-width: 100px;
 }
 }
 }

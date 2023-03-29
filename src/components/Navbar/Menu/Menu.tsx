@@ -32,6 +32,12 @@ const Menu = ({
         });
       }
     });
+    document
+      .getElementsByClassName("selectedMenuLink")?.[0]
+      ?.classList.remove("selectedMenuLink");
+    event.currentTarget
+      .getElementsByTagName("p")[0]
+      .classList.add("selectedMenuLink");
   };
 
   return (
@@ -49,7 +55,7 @@ const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
   height: fit-content;
   min-height: 330px;
 `;

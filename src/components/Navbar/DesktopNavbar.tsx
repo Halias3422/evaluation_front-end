@@ -30,8 +30,6 @@ const NavbarContainer = styled.div`
   height: 100%;
   width: fit-content;
   display: flex;
-  @media screen and (min-width: 1200px) {
-  }
 `;
 
 const InsideContainer = styled.div`
@@ -40,7 +38,7 @@ const InsideContainer = styled.div`
   align-items: center;
   gap: 25px;
   margin: 40px 50px 0px 50px;
-  width: fit-content;
+  width: 100%;
 `;
 
 const MainDivider = styled.div`
