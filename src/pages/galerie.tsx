@@ -37,6 +37,10 @@ const Galerie = ({
       window.addEventListener("resize", () => {
         if (document.documentElement.offsetWidth < 1024) {
           galleryContainer.style.width = "100%";
+        } else {
+          galleryContainer.style.width = `calc(100% - ${
+            document.getElementById("headerElement")?.offsetWidth
+          }px`;
         }
       });
     }
@@ -78,12 +82,13 @@ const GalleryContainer = styled.div<{ $offsetLeft: number }>`
 `;
 
 const PhotosContainer = styled.div`
+  width: 90%;
   max-width: 1400px;
   margin: 0 auto;
   margin-top: 150px;
   margin-bottom: 150px;
   @media screen and (min-width: 1024px) {
-    gap: 30px;
+    gap: 1vw;
     display: flex;
   }
   @media screen and (min-width: 1900px) {
@@ -98,6 +103,7 @@ const ImagesColumn = styled.div`
   margin-bottom: 30px;
   @media screen and (min-width: 1024px) {
     margin-bottom: 0px;
+    gap: 1vw;
   }
 `;
 
