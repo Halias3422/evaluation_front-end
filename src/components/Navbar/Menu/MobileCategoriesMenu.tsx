@@ -1,6 +1,5 @@
 import { Category } from "@/interfaces/categories";
 import { patua } from "@/styles/fonts";
-import SvgArrowDown from "@/svgs/ArrowDown";
 import { useEffect } from "react";
 import styled from "styled-components";
 
@@ -50,7 +49,6 @@ const Select = styled.select`
   font-size: 20px;
   text-align: center;
   padding: 5px 3vw;
-  appearance: none;
   border: ${(props) => `1px solid ${props.theme.lightGrey}`};
   border-radius: 4px 0px 0px 4px;
   color: ${(props) => props.theme.darkGrey};
