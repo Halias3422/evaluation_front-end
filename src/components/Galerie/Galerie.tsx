@@ -1,35 +1,19 @@
 import { Photo } from "@/interfaces/photos";
 import { getAllPhotos } from "@/lib/photos";
 import styled from "styled-components";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect } from "react";
 import Image from "next/image";
-import Navbar from "@/components/Navbar/Navbar";
-import { getAllCategories } from "@/lib/categories";
-import { Category } from "@/interfaces/categories";
-import PageContext from "@/context/pageContext";
-import { pagesPaths } from "@/interfaces/pages";
 
 const Galerie = ({
   photos,
-  categories,
+  offsetLeft,
 }: {
   photos: Photo[];
-  categories: Category[];
+  offsetLeft: number;
 }) => {
-  const [navbarWidth, setNavbarWidth] = useState<number>(0);
-  const { pageContext } = useContext(PageContext);
   useEffect(() => {
     const galleryContainer = document.getElementById("galeryPage");
     if (galleryContainer) {
-      if (pageContext.previousPath.length === 0) {
-        galleryContainer.style.display = "block";
-      }
       galleryContainer.addEventListener("animationend", () => {
         if (
           galleryContainer.offsetHeight === 0 &&
@@ -42,6 +26,7 @@ const Galerie = ({
       galleryContainer.addEventListener("animationstart", () => {
         if (galleryContainer.className.includes("slideIn")) {
           galleryContainer.style.display = "block";
+          galleryContainer.style.overflowY = "scroll";
           if (document.documentElement.offsetWidth > 1024) {
             galleryContainer.style.width = `calc(100% - ${
               document.getElementById("headerElement")?.offsetWidth
@@ -80,24 +65,20 @@ const Galerie = ({
   };
 
   return (
-    <>
-      {pageContext.currentPath === pagesPaths.galery && (
-        <Navbar setNavbarWidth={setNavbarWidth} categories={categories} />
-      )}
-      <GalleryContainer id="galeryPage" $offsetLeft={navbarWidth}>
-        <PhotosContainer>
-          <ImagesColumn>{handlePhotosDisplay(0)}</ImagesColumn>
-          <ImagesColumn>{handlePhotosDisplay(1)}</ImagesColumn>
-          <ImagesColumn>{handlePhotosDisplay(2)}</ImagesColumn>
-        </PhotosContainer>
-      </GalleryContainer>
-    </>
+    <GalleryContainer id="galeryPage" $offsetLeft={offsetLeft}>
+      <PhotosContainer>
+        <ImagesColumn>{handlePhotosDisplay(0)}</ImagesColumn>
+        <ImagesColumn>{handlePhotosDisplay(1)}</ImagesColumn>
+        <ImagesColumn>{handlePhotosDisplay(2)}</ImagesColumn>
+      </PhotosContainer>
+    </GalleryContainer>
   );
 };
 
 const GalleryContainer = styled.div<{ $offsetLeft: number }>`
   width: 100%;
   display: none;
+  overflow: hidden;
 `;
 
 const PhotosContainer = styled.div`
@@ -135,16 +116,5 @@ const PhotoImage = styled(Image)`
     margin: unset;
   }
 `;
-
-export const getStaticProps = async () => {
-  const photos = await getAllPhotos();
-  const categories = await getAllCategories();
-  return {
-    props: {
-      photos,
-      categories,
-    },
-  };
-};
 
 export default Galerie;

@@ -26,7 +26,7 @@ const DesktopNavbar = ({
 };
 
 const NavbarContainer = styled.div`
-  min-height: fit-content;
+  min-height: 100vh;
   width: fit-content;
   display: flex;
 `;

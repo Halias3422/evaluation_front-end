@@ -1,9 +1,22 @@
+import PageContext from "@/context/pageContext";
+import { pagesPaths } from "@/interfaces/pages";
 import { Photo } from "@/interfaces/photos";
 import { abril } from "@/styles/fonts";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import Navbar from "../Navbar/Navbar";
+import { Category } from "@/interfaces/categories";
 
-const HomeContent = ({ backgroundPhoto }: { backgroundPhoto: Photo }) => {
+const HomeContent = ({
+  backgroundPhoto,
+  categories,
+}: {
+  backgroundPhoto: Photo;
+  categories: Category[];
+}) => {
+  const { pageContext } = useContext(PageContext);
+  const [navbarWidth, setNavbarWidth] = useState<number>(0);
+
   useEffect(() => {
     const homeContainer = document.getElementById("homePage");
     if (homeContainer) {
@@ -20,16 +33,21 @@ const HomeContent = ({ backgroundPhoto }: { backgroundPhoto: Photo }) => {
     }
   }, []);
   return (
-    <HomeContentContainer id="homePage">
-      <BackgroundImage $backgroundPhoto={backgroundPhoto} />
-      <TitleContainer id="titleContainer" className="appearingObject">
-        <h1 className={abril.className}>
-          Charles Cantin
-          <br />-<br />
-          Photographe
-        </h1>
-      </TitleContainer>
-    </HomeContentContainer>
+    <>
+      {pageContext.currentPath === pagesPaths.home && (
+        <Navbar setNavbarWidth={setNavbarWidth} categories={categories} />
+      )}
+      <HomeContentContainer id="homePage">
+        <BackgroundImage $backgroundPhoto={backgroundPhoto} />
+        <TitleContainer id="titleContainer" className="appearingObject">
+          <h1 className={abril.className}>
+            Charles Cantin
+            <br />-<br />
+            Photographe
+          </h1>
+        </TitleContainer>
+      </HomeContentContainer>
+    </>
   );
 };
 

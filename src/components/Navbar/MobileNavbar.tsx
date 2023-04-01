@@ -122,7 +122,7 @@ const MenuContainer = styled.div<{ $menuOpen: boolean; $isHome: boolean }>`
   flex-direction: column;
   gap: 42px;
   border-radius: 0 0 16px 16px;
-  height: ${(props) => (props.$menuOpen ? `375px;` : `0px;`)};
+  height: ${(props) => (props.$menuOpen ? `415px;` : `0px;`)};
   border-bottom: 2px solid ${(props) => props.theme.white};
   background: ${(props) =>
     `linear-gradient(${props.theme.darkGrey}, ${props.theme.lightGrey})`};
@@ -136,13 +136,13 @@ const MenuContainer = styled.div<{ $menuOpen: boolean; $isHome: boolean }>`
       opacity: 0;
     }
     to {
-      height: 375px;
+      height: 415px;
       opacity: 1;
     }
   }
   @keyframes closeMenu {
     from {
-      height: 375px;
+      height: 415px;
       opacity: 1;
     }
     to {

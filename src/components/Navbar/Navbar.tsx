@@ -66,9 +66,10 @@ const Navbar = ({
 
 const Header = styled.header<{ $isHome: boolean; $docWidth: number }>`
   opacity: ${(props) => (!props.$isHome && props.$docWidth > -1 ? "1" : "0")};
-  position: fixed;
   width: 100%;
   z-index: 10;
+  position: fixed;
+  top: 0px;
   @media screen and (min-width: 1024px) {
     width: fit-content;
     position: ${(props) => (props.$isHome ? `fixed` : "sticky")};
