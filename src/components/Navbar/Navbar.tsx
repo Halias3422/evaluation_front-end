@@ -51,7 +51,7 @@ const Navbar = ({
   }, [pageContext.currentPath]);
 
   return (
-    <Header id="headerElement">
+    <Header id="headerElement" className="appearingObject">
       {docWidth < 1024 ? (
         <MobileNavbar
           isHome={isHome}

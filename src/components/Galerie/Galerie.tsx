@@ -32,7 +32,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   };
 
   return (
-    <GalleryContainer id="galeryPage">
+    <GalleryContainer id="galleryPage">
       <PhotosContainer>
         <ImagesColumn>{handlePhotosDisplay(0)}</ImagesColumn>
         <ImagesColumn>{handlePhotosDisplay(1)}</ImagesColumn>

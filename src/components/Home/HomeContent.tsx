@@ -33,6 +33,7 @@ const HomeContent = ({
 };
 
 const HomeContentContainer = styled.div`
+  display: none;
   position: absolute;
   left: 0px;
   bottom: 0px;

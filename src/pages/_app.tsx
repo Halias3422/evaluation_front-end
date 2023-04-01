@@ -9,7 +9,7 @@ import styled, { ThemeProvider } from "styled-components";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [pageContext, setPageContext] = useState<PagePath>({
-    contextLoaded: false,
+    contextLoaded: true,
     previousPath: "",
     currentPath: "",
   });

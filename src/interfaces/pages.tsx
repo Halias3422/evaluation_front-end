@@ -12,7 +12,7 @@ export interface PageContextData {
 }
 export const pagesComponentsInfo = {
   ["/galerie"]: {
-    id: "galeryPage",
+    id: "galleryPage",
     position: "down",
   },
   ["/tarifs-et-prestations"]: {
