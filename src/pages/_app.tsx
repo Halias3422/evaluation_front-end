@@ -26,19 +26,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Favicon />
       <GlobalStyle />
       <PageContext.Provider value={{ pageContext, setPageContext }}>
-        <ContentContainer>
-          <Component {...pageProps} />
-        </ContentContainer>
+        <Component {...pageProps} />
       </PageContext.Provider>
     </ThemeProvider>
   );
 }
-
-const ContentContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: fit-content;
-  @media screen and (min-width: 1024px) {
-    display: flex;
-  }
-`;

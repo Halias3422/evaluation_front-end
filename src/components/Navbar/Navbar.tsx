@@ -36,6 +36,12 @@ const Navbar = ({
     if (window.location.pathname === "/") {
       setIsHome(true);
     }
+    addEventListener("animationend", () => {
+      const navbar = document.getElementById("headerElement");
+      if (navbar) {
+        navbar.style.opacity = "1";
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -45,12 +51,7 @@ const Navbar = ({
   }, [pageContext.currentPath]);
 
   return (
-    <Header
-      id="headerElement"
-      $isHome={isHome}
-      $docWidth={docWidth}
-      className={isHome ? "appearingObject" : ""}
-    >
+    <Header id="headerElement">
       {docWidth < 1024 ? (
         <MobileNavbar
           isHome={isHome}
@@ -64,15 +65,15 @@ const Navbar = ({
   );
 };
 
-const Header = styled.header<{ $isHome: boolean; $docWidth: number }>`
-  opacity: ${(props) => (!props.$isHome && props.$docWidth > -1 ? "1" : "0")};
+const Header = styled.header`
   width: 100%;
   z-index: 10;
   position: fixed;
   top: 0px;
+  opacity: 0;
   @media screen and (min-width: 1024px) {
     width: fit-content;
-    position: ${(props) => (props.$isHome ? `fixed` : "sticky")};
+    position: sticky;
   }
 `;
 export default Navbar;

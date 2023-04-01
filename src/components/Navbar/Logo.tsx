@@ -1,7 +1,27 @@
 import styled from "styled-components";
 import Image from "next/image";
+import { Dispatch, SetStateAction, useContext } from "react";
+import PageContext from "@/context/pageContext";
+import { pagesPaths } from "@/interfaces/pages";
 
-const Logo = () => {
+const Logo = ({
+  setMenuOpen,
+}: {
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const { pageContext, setPageContext } = useContext(PageContext);
+
+  const handleLogoClick = () => {
+    setMenuOpen(false);
+    setPageContext({
+      contextLoaded: true,
+      previousPath: window.location.pathname,
+      currentPath: pagesPaths.home,
+    });
+    document
+      .getElementsByClassName("selectedMenuLink")?.[0]
+      ?.classList.remove("selectedMenuLink");
+  };
   return (
     <LogoContainer className="objectHoverEffect">
       <LogoImage
@@ -9,7 +29,7 @@ const Logo = () => {
         alt="Charles Cantin logo"
         width={142}
         height={142}
-        onClick={() => (window.location.href = "/")}
+        onClick={() => handleLogoClick()}
         title="Retourner à l'Accueil"
       />
     </LogoContainer>

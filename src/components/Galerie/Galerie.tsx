@@ -1,48 +1,15 @@
 import { Photo } from "@/interfaces/photos";
-import { getAllPhotos } from "@/lib/photos";
 import styled from "styled-components";
 import { useEffect } from "react";
 import Image from "next/image";
+import { Category } from "@/interfaces/categories";
+import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
 
-const Galerie = ({
-  photos,
-  offsetLeft,
-}: {
-  photos: Photo[];
-  offsetLeft: number;
-}) => {
+const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   useEffect(() => {
     const galleryContainer = document.getElementById("galeryPage");
     if (galleryContainer) {
-      galleryContainer.addEventListener("animationend", () => {
-        if (
-          galleryContainer.offsetHeight === 0 &&
-          galleryContainer.className.includes("slideOut")
-        ) {
-          galleryContainer.style.display = "none";
-        } else if (galleryContainer.className.includes("slideIn")) {
-        }
-      });
-      galleryContainer.addEventListener("animationstart", () => {
-        if (galleryContainer.className.includes("slideIn")) {
-          galleryContainer.style.display = "block";
-          galleryContainer.style.overflowY = "scroll";
-          if (document.documentElement.offsetWidth > 1024) {
-            galleryContainer.style.width = `calc(100% - ${
-              document.getElementById("headerElement")?.offsetWidth
-            }px`;
-          }
-        }
-      });
-      window.addEventListener("resize", () => {
-        if (document.documentElement.offsetWidth < 1024) {
-          galleryContainer.style.width = "100%";
-        } else {
-          galleryContainer.style.width = `calc(100% - ${
-            document.getElementById("headerElement")?.offsetWidth
-          }px`;
-        }
-      });
+      pageAnimationsHandler(galleryContainer);
     }
   }, []);
 
@@ -65,7 +32,7 @@ const Galerie = ({
   };
 
   return (
-    <GalleryContainer id="galeryPage" $offsetLeft={offsetLeft}>
+    <GalleryContainer id="galeryPage">
       <PhotosContainer>
         <ImagesColumn>{handlePhotosDisplay(0)}</ImagesColumn>
         <ImagesColumn>{handlePhotosDisplay(1)}</ImagesColumn>
@@ -75,10 +42,9 @@ const Galerie = ({
   );
 };
 
-const GalleryContainer = styled.div<{ $offsetLeft: number }>`
+const GalleryContainer = styled.div`
   width: 100%;
   display: none;
-  overflow: hidden;
 `;
 
 const PhotosContainer = styled.div`

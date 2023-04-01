@@ -1,59 +1,41 @@
-import PageContext from "@/context/pageContext";
-import { pagesPaths } from "@/interfaces/pages";
 import { Photo } from "@/interfaces/photos";
 import { abril } from "@/styles/fonts";
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
-import Navbar from "../Navbar/Navbar";
 import { Category } from "@/interfaces/categories";
+import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
 
 const HomeContent = ({
   backgroundPhoto,
-  categories,
 }: {
   backgroundPhoto: Photo;
   categories: Category[];
 }) => {
-  const { pageContext } = useContext(PageContext);
-  const [navbarWidth, setNavbarWidth] = useState<number>(0);
-
   useEffect(() => {
     const homeContainer = document.getElementById("homePage");
     if (homeContainer) {
-      homeContainer.addEventListener("animationend", () => {
-        if (homeContainer.offsetHeight === 0) {
-          homeContainer.style.display = "none";
-        }
-      });
-      homeContainer.addEventListener("animationstart", () => {
-        if (homeContainer.offsetHeight === 0) {
-          homeContainer.style.display = "block";
-        }
-      });
+      pageAnimationsHandler(homeContainer);
     }
   }, []);
+
   return (
-    <>
-      {pageContext.currentPath === pagesPaths.home && (
-        <Navbar setNavbarWidth={setNavbarWidth} categories={categories} />
-      )}
-      <HomeContentContainer id="homePage">
-        <BackgroundImage $backgroundPhoto={backgroundPhoto} />
-        <TitleContainer id="titleContainer" className="appearingObject">
-          <h1 className={abril.className}>
-            Charles Cantin
-            <br />-<br />
-            Photographe
-          </h1>
-        </TitleContainer>
-      </HomeContentContainer>
-    </>
+    <HomeContentContainer id="homePage">
+      <BackgroundImage $backgroundPhoto={backgroundPhoto} />
+      <TitleContainer id="titleContainer" className="appearingObject">
+        <h1 className={abril.className}>
+          Charles Cantin
+          <br />-<br />
+          Photographe
+        </h1>
+      </TitleContainer>
+    </HomeContentContainer>
   );
 };
 
 const HomeContentContainer = styled.div`
   position: absolute;
   left: 0px;
+  bottom: 0px;
   width: 100%;
   height: 100%;
   overflow: hidden;

@@ -3,17 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import * as NetlifyIdentity from "netlify-identity-widget";
 import { getAllPhotos, getOnePhotoByFileName } from "@/lib/photos";
 import { Photo } from "@/interfaces/photos";
-import Navbar from "@/components/Navbar/Navbar";
 import HomeContent from "@/components/Home/HomeContent";
 import PageContext from "@/context/pageContext";
-import Galerie from "./galerie";
-import { pagesComponentsInfo, pagesPaths } from "@/interfaces/pages";
-import NotFound from "./404";
-import { setSlideClass, slideClassesList } from "@/interfaces/transitions";
-import styled from "styled-components";
 import { getAllCategories } from "@/lib/categories";
 import { Category } from "@/interfaces/categories";
 import { internalRouter } from "@/lib/internalRouter";
+import Galerie from "@/components/Galerie/Galerie";
+import { pagesPaths } from "@/interfaces/pages";
+import Navbar from "@/components/Navbar/Navbar";
+import styled from "styled-components";
 
 interface HomeProps {
   backgroundPhoto: Photo;
@@ -22,6 +20,7 @@ interface HomeProps {
 }
 const Home = ({ ...props }: HomeProps) => {
   const { backgroundPhoto, photos, categories } = props;
+  const [navbarWidth, setNavbarWidth] = useState<number>(0);
   const { pageContext, setPageContext } = useContext(PageContext);
 
   useEffect(() => {
@@ -48,10 +47,32 @@ const Home = ({ ...props }: HomeProps) => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <HomeContent backgroundPhoto={backgroundPhoto} categories={categories} />
-      <Galerie photos={photos} categories={categories} />
+      <ContentContainer>
+        <Navbar setNavbarWidth={setNavbarWidth} categories={categories} />
+        <HomeContent
+          backgroundPhoto={backgroundPhoto}
+          categories={categories}
+        />
+        <Galerie photos={photos} categories={categories} />
+      </ContentContainer>
     </>
   );
+};
+
+const ContentContainer = styled.main`
+  width: 100%;
+  height: 100%;
+  min-height: fit-content;
+  @media screen and (min-width: 1024px) {
+    display: flex;
+  }
+`;
+
+export const getStaticPaths = async () => {
+  return {
+    paths: Object.values(pagesPaths),
+    fallback: false,
+  };
 };
 
 export const getStaticProps = async () => {

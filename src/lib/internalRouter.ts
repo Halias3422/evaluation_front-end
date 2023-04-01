@@ -14,6 +14,7 @@ export const internalRouter = (
   setPageContext: Dispatch<SetStateAction<PagePath>>
 ) => {
   if (pageContext.previousPath.length === 0) {
+    document.getElementById("headerElement")?.classList.add("appearingObject");
     setPageContext({
       contextLoaded: true,
       previousPath: "",

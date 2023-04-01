@@ -25,7 +25,6 @@ const Menu = ({
     Object.values(pagesPaths).map((path) => {
       if (path === event.currentTarget.pathname) {
         setPageContext({
-          ...pageContext,
           contextLoaded: true,
           previousPath: window.location.pathname,
           currentPath: event.currentTarget.pathname,

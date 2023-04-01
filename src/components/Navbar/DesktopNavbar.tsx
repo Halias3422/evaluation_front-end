@@ -13,7 +13,7 @@ const DesktopNavbar = ({
   return (
     <NavbarContainer>
       <InsideContainer>
-        <Logo />
+        <Logo setMenuOpen={() => {}} />
         <Menu
           setMenuOpen={() => {}}
           categories={categories}

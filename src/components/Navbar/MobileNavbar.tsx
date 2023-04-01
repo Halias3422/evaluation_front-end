@@ -55,7 +55,7 @@ const MobileNavbar = ({
         $isHome={isHome}
         $isLoaded={$isLoaded}
       >
-        <Logo />
+        <Logo setMenuOpen={setMenuOpen} />
         {pageContext.currentPath.includes(pagesPaths.galery) && (
           <MobileCategoriesMenu categories={categories} />
         )}
@@ -129,7 +129,7 @@ const MenuContainer = styled.div<{ $menuOpen: boolean; $isHome: boolean }>`
   ${(props) =>
     props.$menuOpen
       ? `animation openMenu ease-out 0.6s forwards;`
-      : `animation closeMenu ease-out 0.6s;`};
+      : `animation closeMenu ease-out 0.2s;`};
   @keyframes openMenu {
     from {
       height: 0px;
