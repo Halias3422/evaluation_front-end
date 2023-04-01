@@ -21,7 +21,7 @@ width: 100%;
 .link {
 text-decoration: none;
 color: ${colorscheme.white};
-width: 100%;
+width: 60%;
 text-align: center;
 font-size: 20px;
 font-weight: 400;
@@ -182,6 +182,7 @@ animation: 1s ease-out slide-in-from-right reverse forwards;
 @media screen and (min-width: 1024px) {
 	.link {
 	font-size: 22px;
+	width: 100%;
 }
 
 @media screen and (min-width: 1200px) {

@@ -37,6 +37,7 @@ export const internalRouter = (
     if (currentPage.element) {
       currentPage.element.style.display = "block";
       currentPage.element.classList.remove(...slideClassesList);
+      currentPage.element.classList.add("appearingObject");
       if (previousPage && previousPage.element) {
         currentPage.element.classList.add(
           setSlideClass[currentPage.info.position as keyof typeof setSlideClass]

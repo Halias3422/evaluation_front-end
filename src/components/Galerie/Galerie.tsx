@@ -7,7 +7,7 @@ import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
 
 const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   useEffect(() => {
-    const galleryContainer = document.getElementById("galeryPage");
+    const galleryContainer = document.getElementById("galleryPage");
     if (galleryContainer) {
       pageAnimationsHandler(galleryContainer);
     }

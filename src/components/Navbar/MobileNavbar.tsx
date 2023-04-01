@@ -56,7 +56,7 @@ const MobileNavbar = ({
         $isLoaded={$isLoaded}
       >
         <Logo setMenuOpen={setMenuOpen} />
-        {pageContext.currentPath.includes(pagesPaths.galery) && (
+        {pageContext.currentPath.includes(pagesPaths.gallery) && (
           <MobileCategoriesMenu categories={categories} />
         )}
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>

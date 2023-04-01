@@ -24,7 +24,7 @@ export const pagesComponentsInfo = {
 };
 
 export const pagesPaths = {
-  galery: "/galerie",
+  gallery: "/galerie",
   tarification: "/tarifs-et-prestations",
   contact: "/contact",
   home: "/",
