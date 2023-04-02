@@ -3,6 +3,9 @@ import { setSlideClass, slideClassesList } from "@/interfaces/transitions";
 import { Dispatch, SetStateAction } from "react";
 
 const retreivePageInfo = (pagePath: string) => {
+  if (pagePath.startsWith(pagesPaths.gallery)) {
+    pagePath = pagesPaths.gallery;
+  }
   const info =
     pagesComponentsInfo[pagePath as keyof typeof pagesComponentsInfo];
   if (info) {
@@ -28,9 +31,9 @@ export const internalRouter = (
     });
   }
   if (
-    pageContext.contextLoaded &&
     pageContext.currentPath.length > 0 &&
-    Object.values(pagesPaths).includes(pageContext.currentPath)
+    (Object.values(pagesPaths).includes(pageContext.currentPath) ||
+      pageContext.currentPath.startsWith(pagesPaths.gallery))
   ) {
     let previousPage = null;
     if (pageContext.previousPath.length > 0) {

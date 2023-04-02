@@ -1,9 +1,12 @@
+import PageContext from "@/context/pageContext";
 import { Category } from "@/interfaces/categories";
+import { pagesPaths } from "@/interfaces/pages";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
+  const { pageContext, setPageContext } = useContext(PageContext);
   const [categoriesMenus, setCategoriesMenus] = useState<HTMLElement[]>([]);
 
   const handleCategoryMenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -14,15 +17,18 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
     });
     e.currentTarget.classList.add("selectedCategoryMenu");
     e.currentTarget.classList.remove("textHoverEffect");
-    if (e.currentTarget.textContent !== "Toutes") {
-      history.pushState(
-        null,
-        "",
-        `/galerie/${e.currentTarget.textContent?.toLowerCase()}`
-      );
-    } else {
-      history.pushState(null, "", "/galerie");
-    }
+    const formattedCategory = e.currentTarget.text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    setPageContext({
+      ...pageContext,
+      previousPath: window.location.pathname,
+      currentPath:
+        e.currentTarget.text === "Toutes"
+          ? pagesPaths.gallery
+          : pagesPaths.gallery + "/" + formattedCategory,
+    });
   };
 
   useEffect(() => {
@@ -30,13 +36,16 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
     allCategoriesMenus.push(
       document.getElementById("allCategories") as HTMLElement
     );
-    allCategoriesMenus[0].classList.add("selectedCategoryMenu");
-    allCategoriesMenus[0].classList.remove("textHoverEffect");
     categories.map((category: Category, index: number) => {
       allCategoriesMenus.push(
         document.getElementById(category.name + index) as HTMLElement
       );
     });
+    const selectedLinkIndex = allCategoriesMenus.findIndex((linkElem) => {
+      return (linkElem as HTMLAnchorElement).href === window.location.href;
+    });
+    allCategoriesMenus[selectedLinkIndex].classList.add("selectedCategoryMenu");
+    allCategoriesMenus[selectedLinkIndex].classList.remove("textHoverEffect");
     setCategoriesMenus(allCategoriesMenus as HTMLElement[]);
   }, []);
 
@@ -45,7 +54,7 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
       <Title className="link">Catégories</Title>
       <CategoryMenuItem
         id="allCategories"
-        href="/galerie"
+        href={pagesPaths.gallery}
         className="link textHoverEffect appearingHeightObject"
         onClick={(e) => handleCategoryMenuClick(e)}
       >
@@ -54,7 +63,14 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
       {categories.map((category: Category, index: number) => {
         return (
           <CategoryMenuItem
-            href={`/categorie/${category.name}`}
+            href={
+              pagesPaths.gallery +
+              "/" +
+              category.name
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+            }
             className="link textHoverEffect appearingHeightObject"
             key={category.name + index}
             id={category.name + index}

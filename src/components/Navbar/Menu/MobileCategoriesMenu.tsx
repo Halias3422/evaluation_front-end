@@ -11,10 +11,7 @@ const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
 
   useEffect(() => {
     if (selectedCategory.length > 0) {
-      const formattedCategory = selectedCategory
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+      const formattedCategory = selectedCategory;
       setPageContext({
         ...pageContext,
         previousPath: window.location.pathname,
@@ -23,6 +20,11 @@ const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
             ? pagesPaths.gallery
             : pagesPaths.gallery + "/" + formattedCategory,
       });
+    } else {
+      let urlCategory = window.location.pathname
+        .replace(pagesPaths.gallery, "")
+        .replace("/", "");
+      setSelectedCategory(urlCategory);
     }
   }, [selectedCategory]);
 
@@ -33,11 +35,18 @@ const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
         className={patua.className}
         name="categoriesSelect"
         onChange={(e) => setSelectedCategory(e.currentTarget.value)}
+        value={selectedCategory}
       >
         <option value="Toutes">Toutes</option>
         {categories.map((category) => {
           return (
-            <option key={category.name} value={category.name}>
+            <option
+              key={category.name}
+              value={category.name
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")}
+            >
               {category.name}
             </option>
           );

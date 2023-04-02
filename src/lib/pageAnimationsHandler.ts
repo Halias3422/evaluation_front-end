@@ -9,8 +9,8 @@ export const pageAnimationsHandler = (element: HTMLElement) => {
     element.classList.remove(...slideClassesList);
   });
   element.addEventListener("animationstart", () => {
+    element.style.display = "block";
     if (element.className.includes("slideOut")) {
-      element.style.display = "block";
       if (
         document.documentElement.offsetWidth > 1024 &&
         element.id !== "homePage"
