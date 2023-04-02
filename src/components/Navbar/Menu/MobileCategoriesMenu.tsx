@@ -1,28 +1,38 @@
+import PageContext from "@/context/pageContext";
 import { Category } from "@/interfaces/categories";
+import { pagesPaths } from "@/interfaces/pages";
 import { patua } from "@/styles/fonts";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
+  const { pageContext, setPageContext } = useContext(PageContext);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+
   useEffect(() => {
-    const menu = document.getElementById(
-      "mobileCategoriesMenu"
-    ) as HTMLDivElement;
-    if (menu) {
-      menu.addEventListener("click", () => {
-        const select = document.getElementById(
-          "categoriesSelect"
-        ) as HTMLSelectElement;
-        select.toggleAttribute("open");
+    if (selectedCategory.length > 0) {
+      const formattedCategory = selectedCategory
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      setPageContext({
+        ...pageContext,
+        previousPath: window.location.pathname,
+        currentPath:
+          selectedCategory === "Toutes"
+            ? pagesPaths.gallery
+            : pagesPaths.gallery + "/" + formattedCategory,
       });
     }
-  }, []);
+  }, [selectedCategory]);
+
   return (
     <CategoriesMenuContainer id="mobileCategoriesMenu">
       <Select
         id="categoriesSelect"
         className={patua.className}
         name="categoriesSelect"
+        onChange={(e) => setSelectedCategory(e.currentTarget.value)}
       >
         <option value="Toutes">Toutes</option>
         {categories.map((category) => {

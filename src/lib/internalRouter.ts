@@ -1,26 +1,37 @@
-import { PagePath, pagesComponentsInfo } from "@/interfaces/pages";
+import { PagePath, pagesComponentsInfo, pagesPaths } from "@/interfaces/pages";
 import { setSlideClass, slideClassesList } from "@/interfaces/transitions";
 import { Dispatch, SetStateAction } from "react";
 
 const retreivePageInfo = (pagePath: string) => {
   const info =
     pagesComponentsInfo[pagePath as keyof typeof pagesComponentsInfo];
-  const element = document.getElementById(info.id);
-  return { info, element };
+  if (info) {
+    const element = document.getElementById(info.id);
+    return { info, element };
+  }
+  return { element: null };
 };
 
 export const internalRouter = (
   pageContext: PagePath,
-  setPageContext: Dispatch<SetStateAction<PagePath>>
+  setPageContext: Dispatch<SetStateAction<PagePath>>,
+  isPopState: boolean
 ) => {
+  if (!isPopState && pageContext.currentPath !== window.location.pathname) {
+    history.pushState(null, "", pageContext.currentPath);
+  }
   if (pageContext.previousPath.length === 0) {
     setPageContext({
-      contextLoaded: true,
+      ...pageContext,
       previousPath: "",
       currentPath: window.location.pathname,
     });
   }
-  if (pageContext.contextLoaded && pageContext.currentPath.length > 0) {
+  if (
+    pageContext.contextLoaded &&
+    pageContext.currentPath.length > 0 &&
+    Object.values(pagesPaths).includes(pageContext.currentPath)
+  ) {
     let previousPage = null;
     if (pageContext.previousPath.length > 0) {
       previousPage = retreivePageInfo(pageContext.previousPath);
@@ -44,7 +55,6 @@ export const internalRouter = (
             .slideIn
         );
       }
-      history.pushState(null, "", pageContext.currentPath);
     }
   }
 };

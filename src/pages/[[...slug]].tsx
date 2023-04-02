@@ -21,6 +21,7 @@ interface HomeProps {
 const Home = ({ ...props }: HomeProps) => {
   const { backgroundPhoto, photos, categories } = props;
   const [navbarWidth, setNavbarWidth] = useState<number>(0);
+  const [popState, setPopState] = useState<boolean>(false);
   const { pageContext, setPageContext } = useContext(PageContext);
 
   useEffect(() => {
@@ -31,10 +32,21 @@ const Home = ({ ...props }: HomeProps) => {
         });
       }
     });
+    window.addEventListener("popstate", (e) => {
+      location.reload();
+    });
   }, []);
 
   useEffect(() => {
-    internalRouter(pageContext, setPageContext);
+    if (pageContext.contextLoaded) {
+      if (
+        pageContext.currentPath !== window.location.pathname ||
+        !pageContext.previousPath
+      ) {
+        internalRouter(pageContext, setPageContext, popState);
+      }
+      setPopState(false);
+    }
   }, [pageContext.currentPath]);
 
   return (
@@ -69,8 +81,17 @@ const ContentContainer = styled.main`
 `;
 
 export const getStaticPaths = async () => {
+  const categories = await getAllCategories();
+  const categoriesPaths = [];
+  for (const category of categories) {
+    const formattedCategory = category.name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    categoriesPaths.push(pagesPaths.gallery + "/" + formattedCategory);
+  }
   return {
-    paths: Object.values(pagesPaths),
+    paths: Object.values(pagesPaths).concat(categoriesPaths),
     fallback: false,
   };
 };

@@ -14,7 +14,7 @@ const Logo = ({
   const handleLogoClick = () => {
     setMenuOpen(false);
     setPageContext({
-      contextLoaded: true,
+      ...pageContext,
       previousPath: window.location.pathname,
       currentPath: pagesPaths.home,
     });

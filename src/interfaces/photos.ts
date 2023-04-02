@@ -13,3 +13,11 @@ export interface Photo {
   };
   category: string;
 }
+
+export interface DisplayedPhotos {
+  category: string;
+  photos: Photo[];
+  column1: JSX.Element[];
+  column2: JSX.Element[];
+  column3: JSX.Element[];
+}

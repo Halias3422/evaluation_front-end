@@ -5,11 +5,11 @@ import GlobalStyle from "@/styles/GlobalStyle";
 import colorscheme from "@/styles/colorscheme";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [pageContext, setPageContext] = useState<PagePath>({
-    contextLoaded: true,
+    contextLoaded: false,
     previousPath: "",
     currentPath: "",
   });
@@ -17,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setPageContext({
       ...pageContext,
+      contextLoaded: true,
       currentPath: window.location.pathname,
     });
   }, []);

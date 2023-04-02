@@ -1,42 +1,97 @@
-import { Photo } from "@/interfaces/photos";
+import { DisplayedPhotos, Photo } from "@/interfaces/photos";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { Category } from "@/interfaces/categories";
 import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
+import PageContext from "@/context/pageContext";
+import { pagesPaths } from "@/interfaces/pages";
 
 const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
+  const { pageContext } = useContext(PageContext);
+  const [displayedPhotos, setDisplayedPhotos] = useState<DisplayedPhotos>({
+    category: "",
+    photos: photos,
+    column1: [],
+    column2: [],
+    column3: [],
+  });
+
   useEffect(() => {
     const galleryContainer = document.getElementById("galleryPage");
     if (galleryContainer) {
       pageAnimationsHandler(galleryContainer);
     }
+    handleCategoryChange();
   }, []);
 
   const handlePhotosDisplay = (offset: number) => {
     const rowImages = [];
-    for (let i = offset; i < photos.length; i += 3) {
-      const { image, width, height } = photos[i].imageSmall;
+    for (let i = offset; i < displayedPhotos.photos.length; i += 3) {
+      const { image, width, height } = displayedPhotos.photos[i].imageSmall;
       rowImages.push(
         <PhotoImage
           key={i}
           src={image}
-          alt={photos[i].title}
-          title={photos[i].title}
+          alt={displayedPhotos.photos[i].title}
+          title={displayedPhotos.photos[i].title}
           width={width / 1}
           height={height / 1}
         />
       );
     }
-    return [...rowImages];
+    return rowImages;
   };
+
+  const handleCategoryChange = () => {
+    let filter = pageContext.currentPath.replace(pagesPaths.gallery, "");
+    if (filter && filter[0] === "/") {
+      filter = filter.substring(1);
+    }
+    if (pageContext.contextLoaded) {
+      const filteredPhotos = photos.filter(
+        (photo) =>
+          photo.category[0]
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") === filter
+      );
+      setDisplayedPhotos({
+        ...displayedPhotos,
+        category: filter,
+        photos: filter.length > 0 ? filteredPhotos : photos,
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleCategoryChange();
+  }, [pageContext.currentPath]);
+
+  useEffect(() => {
+    setDisplayedPhotos({
+      ...displayedPhotos,
+      column1: handlePhotosDisplay(0),
+      column2: handlePhotosDisplay(1),
+      column3: handlePhotosDisplay(2),
+    });
+    document.getElementById("galleryPage")?.classList.add("appearingObject");
+  }, [displayedPhotos.category]);
 
   return (
     <GalleryContainer id="galleryPage">
       <PhotosContainer>
-        <ImagesColumn>{handlePhotosDisplay(0)}</ImagesColumn>
-        <ImagesColumn>{handlePhotosDisplay(1)}</ImagesColumn>
-        <ImagesColumn>{handlePhotosDisplay(2)}</ImagesColumn>
+        {displayedPhotos.photos.length > 0 ? (
+          <>
+            <ImagesColumn>{[...displayedPhotos.column1]}</ImagesColumn>
+            <ImagesColumn>{[...displayedPhotos.column2]}</ImagesColumn>
+            <ImagesColumn>{[...displayedPhotos.column3]}</ImagesColumn>
+          </>
+        ) : (
+          <h2 className="mainTheme">
+            Il n'y a actuellement aucune photo dans cette catégorie :(
+          </h2>
+        )}
       </PhotosContainer>
     </GalleryContainer>
   );
@@ -53,6 +108,9 @@ const PhotosContainer = styled.div`
   margin: 0 auto;
   margin-top: 150px;
   margin-bottom: 150px;
+  h2 {
+    text-align: center;
+  }
   @media screen and (min-width: 1024px) {
     gap: 1vw;
     display: flex;
