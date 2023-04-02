@@ -26,21 +26,21 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   }, []);
 
   const handlePhotosDisplay = (offset: number) => {
-    const rowImages = [];
+    const columnImages = [];
     for (let i = offset; i < displayedPhotos.photos.length; i += 3) {
       const { image, width, height } = displayedPhotos.photos[i].imageSmall;
-      rowImages.push(
+      columnImages.push(
         <PhotoImage
           key={i}
           src={image}
           alt={displayedPhotos.photos[i].title}
           title={displayedPhotos.photos[i].title}
-          width={width / 1}
-          height={height / 1}
+          width={width}
+          height={height}
         />
       );
     }
-    return rowImages;
+    return columnImages;
   };
 
   const handleCategoryChange = () => {
@@ -65,7 +65,9 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   };
 
   useEffect(() => {
-    handleCategoryChange();
+    if (pageContext.currentPath.includes(pagesPaths.gallery)) {
+      handleCategoryChange();
+    }
   }, [pageContext.currentPath]);
 
   useEffect(() => {
@@ -100,6 +102,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
 const GalleryContainer = styled.div`
   width: 100%;
   display: none;
+  position: absolute;
 `;
 
 const PhotosContainer = styled.div`
@@ -114,9 +117,16 @@ const PhotosContainer = styled.div`
   @media screen and (min-width: 1024px) {
     gap: 1vw;
     display: flex;
+    width: 70%;
+    padding-left: 20vw;
   }
-  @media screen and (min-width: 1900px) {
-    margin-left: 11%;
+  @media screen and (min-width: 1625px) {
+    width: 80%;
+    padding-left: 18vw;
+  }
+  @media screen and (min-width: 2101px) {
+    width: 90%;
+    padding-left: 0px;
   }
 `;
 

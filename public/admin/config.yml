@@ -81,3 +81,20 @@ collections:
       - label: "Nom"
         name: "name"
         widget: "string"
+  - name: "prestations"
+    label: "Prestations"
+    folder: "content/prestations/"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - name: "title"
+        label: "Titre"
+        widget: "string"
+      - name: "description"
+        label: "Description"
+        widget: "string"
+      - name: "price"
+        label: "Prix"
+        widget: "number"
+        value_type: "float"
+        required: false

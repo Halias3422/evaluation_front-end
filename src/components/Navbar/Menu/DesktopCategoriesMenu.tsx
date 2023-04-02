@@ -44,8 +44,12 @@ const DesktopCategoriesMenu = ({ categories }: { categories: Category[] }) => {
     const selectedLinkIndex = allCategoriesMenus.findIndex((linkElem) => {
       return (linkElem as HTMLAnchorElement).href === window.location.href;
     });
-    allCategoriesMenus[selectedLinkIndex].classList.add("selectedCategoryMenu");
-    allCategoriesMenus[selectedLinkIndex].classList.remove("textHoverEffect");
+    allCategoriesMenus[
+      selectedLinkIndex > 0 ? selectedLinkIndex : 0
+    ].classList.add("selectedCategoryMenu");
+    allCategoriesMenus[
+      selectedLinkIndex > 0 ? selectedLinkIndex : 0
+    ].classList.remove("textHoverEffect");
     setCategoriesMenus(allCategoriesMenus as HTMLElement[]);
   }, []);
 

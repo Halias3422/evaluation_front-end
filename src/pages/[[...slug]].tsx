@@ -12,15 +12,18 @@ import Galerie from "@/components/Galerie/Galerie";
 import { pagesPaths } from "@/interfaces/pages";
 import Navbar from "@/components/Navbar/Navbar";
 import styled from "styled-components";
+import Prestations from "@/components/Prestations/Prestations";
+import { getAllPrestations } from "@/lib/prestations";
+import { Prestation } from "@/interfaces/prestations";
 
 interface HomeProps {
   backgroundPhoto: Photo;
   photos: Photo[];
   categories: Category[];
+  prestations: Prestation[];
 }
 const Home = ({ ...props }: HomeProps) => {
-  const { backgroundPhoto, photos, categories } = props;
-  const [navbarWidth, setNavbarWidth] = useState<number>(0);
+  const { backgroundPhoto, photos, categories, prestations } = props;
   const [popState, setPopState] = useState<boolean>(false);
   const { pageContext, setPageContext } = useContext(PageContext);
 
@@ -32,7 +35,7 @@ const Home = ({ ...props }: HomeProps) => {
         });
       }
     });
-    window.addEventListener("popstate", (e) => {
+    window.addEventListener("popstate", () => {
       location.reload();
     });
   }, []);
@@ -60,12 +63,13 @@ const Home = ({ ...props }: HomeProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <ContentContainer>
-        <Navbar setNavbarWidth={setNavbarWidth} categories={categories} />
+        <Navbar categories={categories} />
         <HomeContent
           backgroundPhoto={backgroundPhoto}
           categories={categories}
         />
         <Galerie photos={photos} categories={categories} />
+        <Prestations prestations={prestations} />
       </ContentContainer>
     </>
   );
@@ -102,11 +106,13 @@ export const getStaticProps = async () => {
   );
   const photos = await getAllPhotos();
   const categories = await getAllCategories();
+  const prestations = await getAllPrestations();
   return {
     props: {
       photos,
       backgroundPhoto,
       categories,
+      prestations,
     },
   };
 };

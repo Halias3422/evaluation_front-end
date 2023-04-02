@@ -14,13 +14,15 @@ export const pagesComponentsInfo = {
   ["/galerie"]: {
     id: "galleryPage",
     position: "down",
+    opposite: "top",
   },
   ["/tarifs-et-prestations"]: {
-    id: "tarificationPage",
+    id: "prestationsPage",
     position: "right",
+    opposite: "left",
   },
-  ["/contact"]: { id: "contactPage", position: "left" },
-  ["/"]: { id: "homePage", position: "top" },
+  ["/contact"]: { id: "contactPage", position: "left", opposite: "right" },
+  ["/"]: { id: "homePage", position: "top", opposite: "down" },
 };
 
 export const pagesPaths = {

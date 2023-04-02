@@ -1,33 +1,17 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import MobileNavbar from "./MobileNavbar";
 import DesktopNavbar from "./DesktopNavbar";
 import styled from "styled-components";
 import PageContext from "@/context/pageContext";
 import { Category } from "@/interfaces/categories";
 
-const Navbar = ({
-  setNavbarWidth,
-  categories,
-}: {
-  setNavbarWidth: Dispatch<SetStateAction<number>>;
-  categories: Category[];
-}) => {
+const Navbar = ({ categories }: { categories: Category[] }) => {
   const [docWidth, setDocWidth] = useState<number>(-1);
   const [isHome, setIsHome] = useState<boolean>(false);
   const { pageContext } = useContext(PageContext);
 
   const resizeNavbar = () => {
     setDocWidth(document.documentElement.clientWidth);
-    const navbar = document.getElementById("headerElement");
-    if (navbar) {
-      setNavbarWidth(navbar.offsetWidth);
-    }
   };
 
   useEffect(() => {
@@ -51,17 +35,19 @@ const Navbar = ({
   }, [pageContext.currentPath]);
 
   return (
-    <Header id="headerElement" className="appearingObject">
-      {docWidth < 1024 ? (
-        <MobileNavbar
-          isHome={isHome}
-          categories={categories}
-          docWidth={docWidth}
-        />
-      ) : (
-        <DesktopNavbar categories={categories} docWidth={docWidth} />
-      )}
-    </Header>
+    <>
+      <Header id="headerElement" className="appearingObject">
+        {docWidth < 1024 ? (
+          <MobileNavbar
+            isHome={isHome}
+            categories={categories}
+            docWidth={docWidth}
+          />
+        ) : (
+          <DesktopNavbar categories={categories} docWidth={docWidth} />
+        )}
+      </Header>
+    </>
   );
 };
 
@@ -73,7 +59,7 @@ const Header = styled.header`
   opacity: 0;
   @media screen and (min-width: 1024px) {
     width: fit-content;
-    position: sticky;
+    position: fixed;
   }
 `;
 export default Navbar;

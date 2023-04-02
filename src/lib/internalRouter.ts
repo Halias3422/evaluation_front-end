@@ -15,6 +15,19 @@ const retreivePageInfo = (pagePath: string) => {
   return { element: null };
 };
 
+const isGalleryInternalMove = (pageContext: PagePath) => {
+  if (!Object.values(pagesPaths).includes(pageContext.currentPath)) {
+    return true;
+  }
+  if (
+    pageContext.currentPath.startsWith(pagesPaths.gallery) &&
+    pageContext.previousPath.startsWith(pagesPaths.gallery)
+  ) {
+    return true;
+  }
+  return false;
+};
+
 export const internalRouter = (
   pageContext: PagePath,
   setPageContext: Dispatch<SetStateAction<PagePath>>,
@@ -35,24 +48,31 @@ export const internalRouter = (
     (Object.values(pagesPaths).includes(pageContext.currentPath) ||
       pageContext.currentPath.startsWith(pagesPaths.gallery))
   ) {
+    const currentPage = retreivePageInfo(pageContext.currentPath);
     let previousPage = null;
-    if (pageContext.previousPath.length > 0) {
+    if (
+      pageContext.previousPath.length > 0 &&
+      currentPage &&
+      currentPage.info
+    ) {
       previousPage = retreivePageInfo(pageContext.previousPath);
       if (previousPage.element) {
         previousPage.element.classList.remove(...slideClassesList);
         previousPage.element.classList.add(
-          setSlideClass[
-            previousPage.info.position as keyof typeof setSlideClass
-          ].slideOut
+          setSlideClass[currentPage.info.opposite as keyof typeof setSlideClass]
+            .slideOut
         );
       }
     }
-    const currentPage = retreivePageInfo(pageContext.currentPath);
     if (currentPage.element) {
       currentPage.element.style.display = "block";
       currentPage.element.classList.remove(...slideClassesList);
       currentPage.element.classList.add("appearingObject");
-      if (previousPage && previousPage.element) {
+      if (
+        !isGalleryInternalMove(pageContext) &&
+        previousPage &&
+        previousPage.element
+      ) {
         currentPage.element.classList.add(
           setSlideClass[currentPage.info.position as keyof typeof setSlideClass]
             .slideIn

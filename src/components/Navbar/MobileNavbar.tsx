@@ -87,7 +87,7 @@ const NavbarContainer = styled.div<{
 		${(props) =>
       props.$menuOpen && props.$isHome
         ? `animation: color-background ease-out 0.6s forwards;`
-        : props.$isHome && `animation: uncolor-background ease-out 0.6s`};
+        : props.$isHome && `animation: uncolor-background  0.2s`};
 	${(props) =>
     props.$isLoaded && !props.$isHome
       ? `background-color: ${props.theme.darkGrey};`
