@@ -28,6 +28,10 @@ const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
     }
   }, [selectedCategory]);
 
+  useEffect(() => {
+    setSelectedCategory("");
+  }, []);
+
   return (
     <CategoriesMenuContainer id="mobileCategoriesMenu">
       <Select

@@ -20,12 +20,6 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
     if (window.location.pathname === "/") {
       setIsHome(true);
     }
-    addEventListener("animationend", () => {
-      const navbar = document.getElementById("headerElement");
-      if (navbar) {
-        navbar.style.opacity = "1";
-      }
-    });
   }, []);
 
   useEffect(() => {
@@ -57,6 +51,7 @@ const Header = styled.header`
   position: fixed;
   top: 0px;
   opacity: 0;
+  overflow: hidden;
   @media screen and (min-width: 1024px) {
     width: fit-content;
     position: fixed;
