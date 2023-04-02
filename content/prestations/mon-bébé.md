@@ -1,5 +1,5 @@
 ---
 title: Mon bébé
-description: Photo de grossesse (À votre domicile, en extérieur ou en studio)
-price: 160
+description: Photo d’enfant jusqu’à 3 ans (photo à domicile)
+price: 100
 ---
