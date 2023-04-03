@@ -86,6 +86,7 @@ const Contact = () => {
             className={`mainTheme ${roboto.className}`}
             onSubmit={handleFormSubmit}
           >
+            <input type="hidden" name="form-name" value="contact" />
             <FormItem>
               <label htmlFor="nameInput">Votre nom:</label>
               <input
