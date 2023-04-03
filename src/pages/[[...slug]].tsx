@@ -51,6 +51,7 @@ const Home = ({ ...props }: HomeProps) => {
       }
       setPopState(false);
     }
+    window.scrollTo(0, 0);
   }, [pageContext.currentPath]);
 
   return (
