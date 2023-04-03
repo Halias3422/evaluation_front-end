@@ -15,6 +15,7 @@ import styled from "styled-components";
 import Prestations from "@/components/Prestations/Prestations";
 import { getAllPrestations } from "@/lib/prestations";
 import { Prestation } from "@/interfaces/prestations";
+import Contact from "@/components/Contact/Contact";
 
 interface HomeProps {
   backgroundPhoto: Photo;
@@ -70,6 +71,7 @@ const Home = ({ ...props }: HomeProps) => {
         />
         <Galerie photos={photos} categories={categories} />
         <Prestations prestations={prestations} />
+        <Contact />
       </ContentContainer>
     </>
   );

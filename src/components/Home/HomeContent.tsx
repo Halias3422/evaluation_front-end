@@ -19,7 +19,7 @@ const HomeContent = ({
   }, []);
 
   return (
-    <HomeContentContainer id="homePage">
+    <HomeContentContainer id="homePage" className="pageContainer">
       <BackgroundImage $backgroundPhoto={backgroundPhoto} />
       <TitleContainer id="titleContainer" className="appearingObject">
         <h1 className={abril.className}>
@@ -33,11 +33,6 @@ const HomeContent = ({
 };
 
 const HomeContentContainer = styled.div`
-  display: none;
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  width: 100%;
   height: 100%;
   overflow: hidden;
 `;

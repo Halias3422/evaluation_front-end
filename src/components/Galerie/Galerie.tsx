@@ -81,8 +81,8 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   }, [displayedPhotos.category]);
 
   return (
-    <GalleryContainer id="galleryPage">
-      <PhotosContainer>
+    <div id="galleryPage" className="pageContainer">
+      <section className="pageContentWrapper">
         {displayedPhotos.photos.length > 0 ? (
           <>
             <ImagesColumn>{[...displayedPhotos.column1]}</ImagesColumn>
@@ -94,41 +94,10 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
             Il n'y a actuellement aucune photo dans cette catégorie :(
           </h2>
         )}
-      </PhotosContainer>
-    </GalleryContainer>
+      </section>
+    </div>
   );
 };
-
-const GalleryContainer = styled.div`
-  width: 100%;
-  display: none;
-  position: absolute;
-`;
-
-const PhotosContainer = styled.div`
-  width: 90%;
-  max-width: 1400px;
-  margin: 0 auto;
-  margin-top: 150px;
-  margin-bottom: 150px;
-  h2 {
-    text-align: center;
-  }
-  @media screen and (min-width: 1024px) {
-    gap: 1vw;
-    display: flex;
-    width: 70%;
-    padding-left: 20vw;
-  }
-  @media screen and (min-width: 1625px) {
-    width: 80%;
-    padding-left: 18vw;
-  }
-  @media screen and (min-width: 2101px) {
-    width: 90%;
-    padding-left: 0px;
-  }
-`;
 
 const ImagesColumn = styled.div`
   display: flex;

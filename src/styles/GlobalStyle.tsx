@@ -32,6 +32,35 @@ margin: 0px;
 }
 }
 
+.pageContainer {
+  width: 100%;
+	min-height: 100vh;
+  display: none;
+  position: absolute;
+}
+
+.pageContentWrapper {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 150px;
+  margin-bottom: 150px;
+  @media screen and (min-width: 1024px) {
+    gap: 1vw;
+    display: flex;
+    width: 70%;
+    padding-left: 20vw;
+  }
+  @media screen and (min-width: 1625px) {
+    width: 80%;
+    padding-left: 18vw;
+  }
+  @media screen and (min-width: 2101px) {
+    width: 90%;
+    padding-left: 0px;
+  }
+}
+
 .textHoverEffect, .objectHoverEffect {
 position: relative;
 top: 0px;
