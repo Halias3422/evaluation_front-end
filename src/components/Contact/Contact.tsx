@@ -39,6 +39,7 @@ const Contact = () => {
             data-netlify="true"
             className={`mainTheme ${roboto.className}`}
           >
+            <input type="hidden" name="form-name" value="contact" />
             <FormItem>
               <label htmlFor="nameInput">Votre nom:</label>
               <input
