@@ -56,12 +56,13 @@ const MobileNavbar = ({
         $isLoaded={$isLoaded}
       >
         <Logo setMenuOpen={setMenuOpen} />
-        {pageContext.currentPath.includes(pagesPaths.gallery) && (
-          <MobileCategoriesMenu
-            categories={categories}
-            setMenuOpen={setMenuOpen}
-          />
-        )}
+        {pageContext.currentPath.includes(pagesPaths.gallery) &&
+          !document.getElementById("notFoundPage") && (
+            <MobileCategoriesMenu
+              categories={categories}
+              setMenuOpen={setMenuOpen}
+            />
+          )}
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>
           <SvgHamburgerMenu />
         </HamburgerContainer>
