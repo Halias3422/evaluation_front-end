@@ -4,14 +4,61 @@ import styled from "styled-components";
 import Image from "next/image";
 import PageContext from "@/context/pageContext";
 import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
+import { ContactForm } from "@/interfaces/contact";
 
 const Contact = () => {
   const { pageContext } = useContext(PageContext);
-  const [formSubmit, setFormSubmit] = useState<string>("");
+  const [formData, setFormData] = useState<ContactForm>({
+    name: "",
+    email: "",
+    phone: "",
+    object: "",
+    request: "",
+  });
+  const [formSubmit, setFormSubmit] = useState({
+    message: "",
+    image: "",
+  });
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLDivElement>) => {
+  const encode = (data: any) => {
+    return Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+      )
+      .join("&");
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSubmit("Merci, votre demande a bien été transmise !");
+    try {
+      const submitStatus = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...formData }),
+      });
+      if (submitStatus.status !== 200) {
+        throw new Error();
+      }
+      setFormSubmit({
+        message: "Merci, votre demande a bien été transmise !",
+        image: "/mail-sent.webp",
+      });
+    } catch (e) {
+      setFormSubmit({
+        message:
+          "Une erreur a eu lieu lors de l'envoi, merci de réessayer plus tard.",
+        image: "/mail-error.webp",
+      });
+    }
+  };
+
+  const handleInputChange = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.currentTarget.id.replace("Input", "")]: e.currentTarget.value,
+    });
   };
 
   useEffect(() => {
@@ -22,24 +69,23 @@ const Contact = () => {
   }, []);
 
   useEffect(() => {
-    setFormSubmit("");
+    setFormSubmit({
+      message: "",
+      image: "",
+    });
   }, [pageContext.currentPath]);
 
   return (
-    <div
-      id="contactPage"
-      className="pageContainer"
-      onSubmit={(e) => handleFormSubmit(e)}
-    >
+    <div id="contactPage" className="pageContainer">
       <section className="pageContentWrapper">
-        {formSubmit.length === 0 ? (
+        {formSubmit.message.length === 0 ? (
           <ContactForm
             name="contact"
             method="POST"
             data-netlify="true"
             className={`mainTheme ${roboto.className}`}
+            onSubmit={handleFormSubmit}
           >
-            <input type="hidden" name="form-name" value="contact" />
             <FormItem>
               <label htmlFor="nameInput">Votre nom:</label>
               <input
@@ -47,16 +93,18 @@ const Contact = () => {
                 id="nameInput"
                 name="nameInput"
                 type="text"
+                onChange={handleInputChange}
                 required
               />
             </FormItem>
             <FormItem>
-              <label htmlFor="mailInput">Votre adresse mail:</label>
+              <label htmlFor="emailInput">Votre adresse mail:</label>
               <input
                 className={roboto.className}
                 type="email"
-                id="mailInput"
-                name="mailInput"
+                id="emailInput"
+                name="emailInput"
+                onChange={handleInputChange}
                 required
               />
             </FormItem>
@@ -69,6 +117,7 @@ const Contact = () => {
                 type="tel"
                 id="phoneInput"
                 name="phoneInput"
+                onChange={handleInputChange}
               />
             </FormItem>
             <FormItem>
@@ -78,6 +127,7 @@ const Contact = () => {
                 type="text"
                 id="objectInput"
                 name="objectInput"
+                onChange={handleInputChange}
               />
             </FormItem>
             <FormItem>
@@ -87,6 +137,7 @@ const Contact = () => {
                 id="requestInput"
                 name="requestInput"
                 rows={25}
+                onChange={handleInputChange}
                 required
               />
             </FormItem>
@@ -99,13 +150,16 @@ const Contact = () => {
           </ContactForm>
         ) : (
           <SubmitContainer>
-            <h2 className={`mainTheme ${roboto.className}`}>{formSubmit}</h2>
-            <MailImage
-              src="/mail-sent.webp"
-              alt="demande envoyée"
-              width="640"
-              height="373"
-            />
+            <h2 className={`mainTheme ${roboto.className}`}>
+              {formSubmit.message}
+            </h2>
+            <ImageContainer>
+              <SubmitImage
+                src={formSubmit.image}
+                alt="statut de l'envoi"
+                fill
+              />
+            </ImageContainer>
           </SubmitContainer>
         )}
       </section>
@@ -120,9 +174,16 @@ const SubmitContainer = styled.article`
   gap: 60px;
 `;
 
-const MailImage = styled(Image)`
+const ImageContainer = styled.div`
+  position: relative;
+  width: 640px;
   max-width: 100%;
   height: auto;
+  object-fit: cover;
+`;
+
+const SubmitImage = styled(Image)`
+  position: static !important;
 `;
 
 const ContactForm = styled.form`
