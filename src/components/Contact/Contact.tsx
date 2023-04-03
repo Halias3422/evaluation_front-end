@@ -1,78 +1,127 @@
 import { copse, roboto } from "@/styles/fonts";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
+import PageContext from "@/context/pageContext";
+import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
 
 const Contact = () => {
+  const { pageContext } = useContext(PageContext);
+  const [formSubmit, setFormSubmit] = useState<string>("");
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setFormSubmit("Merci, votre demande a bien été transmise !");
+  };
+
+  useEffect(() => {
+    const contactContainer = document.getElementById("contactPage");
+    if (contactContainer) {
+      pageAnimationsHandler(contactContainer);
+    }
+  }, []);
+
+  useEffect(() => {
+    setFormSubmit("");
+  }, [pageContext.currentPath]);
+
   return (
-    <FormContainer id="contactPage" className="pageContainer">
+    <div
+      id="contactPage"
+      className="pageContainer"
+      onSubmit={(e) => handleFormSubmit(e)}
+    >
       <section className="pageContentWrapper">
-        <ContactForm
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          className={`mainTheme ${roboto.className}`}
-        >
-          <FormItem>
-            <label htmlFor="nameInput">Votre nom:</label>
-            <input
-              className={roboto.className}
-              id="nameInput"
-              name="nameInput"
-              type="text"
-              required
+        {formSubmit.length === 0 ? (
+          <ContactForm
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            className={`mainTheme ${roboto.className}`}
+          >
+            <FormItem>
+              <label htmlFor="nameInput">Votre nom:</label>
+              <input
+                className={roboto.className}
+                id="nameInput"
+                name="nameInput"
+                type="text"
+                required
+              />
+            </FormItem>
+            <FormItem>
+              <label htmlFor="mailInput">Votre adresse mail:</label>
+              <input
+                className={roboto.className}
+                type="email"
+                id="mailInput"
+                name="mailInput"
+                required
+              />
+            </FormItem>
+            <FormItem>
+              <label htmlFor="phoneInput">
+                Votre numéro de téléphone (optionnel):
+              </label>
+              <input
+                className={roboto.className}
+                type="tel"
+                id="phoneInput"
+                name="phoneInput"
+              />
+            </FormItem>
+            <FormItem>
+              <label htmlFor="objectInput">Objet du contact:</label>
+              <input
+                className={roboto.className}
+                type="text"
+                id="objectInput"
+                name="objectInput"
+              />
+            </FormItem>
+            <FormItem>
+              <label htmlFor="requestInput">Message:</label>
+              <textarea
+                className={roboto.className}
+                id="requestInput"
+                name="requestInput"
+                rows={25}
+                required
+              />
+            </FormItem>
+            <SubmitButton
+              className={`objectHoverEffect ${copse.className}`}
+              type="submit"
+            >
+              Envoyer
+            </SubmitButton>
+          </ContactForm>
+        ) : (
+          <SubmitContainer>
+            <h2 className={`mainTheme ${roboto.className}`}>{formSubmit}</h2>
+            <MailImage
+              src="/mail-sent.webp"
+              alt="demande envoyée"
+              width="640"
+              height="373"
             />
-          </FormItem>
-          <FormItem>
-            <label htmlFor="mailInput">Votre adresse mail:</label>
-            <input
-              className={roboto.className}
-              type="email"
-              id="mailInput"
-              name="mailInput"
-              required
-            />
-          </FormItem>
-          <FormItem>
-            <label htmlFor="phoneInput">
-              Votre numéro de téléphone (optionnel):
-            </label>
-            <input
-              className={roboto.className}
-              type="tel"
-              id="phoneInput"
-              name="phoneInput"
-            />
-          </FormItem>
-          <FormItem>
-            <label htmlFor="objectInput">Objet du contact:</label>
-            <input
-              className={roboto.className}
-              type="text"
-              id="objectInput"
-              name="objectInput"
-            />
-          </FormItem>
-          <FormItem>
-            <label htmlFor="requestInput">Message:</label>
-            <textarea
-              className={roboto.className}
-              id="requestInput"
-              name="requestInput"
-              rows={25}
-              required
-            />
-          </FormItem>
-          <SubmitButton className={copse.className} type="submit">
-            Envoyer
-          </SubmitButton>
-        </ContactForm>
+          </SubmitContainer>
+        )}
       </section>
-    </FormContainer>
+    </div>
   );
 };
 
-const FormContainer = styled.div`
+const SubmitContainer = styled.article`
   display: flex;
-  margin-top: 4%;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+`;
+
+const MailImage = styled(Image)`
+  max-width: 100%;
+  height: auto;
 `;
 
 const ContactForm = styled.form`
@@ -84,6 +133,8 @@ const ContactForm = styled.form`
   textarea {
     background-color: ${(props) => props.theme.white};
     font-size: 16px;
+    border: ${(props) => `1px solid ${props.theme.lightGrey}`};
+    border-radius: 4px;
   }
   @media screen and (min-width: 1024px) {
     label,
@@ -110,6 +161,7 @@ const SubmitButton = styled.button`
   border: ${(props) => `1px solid ${props.theme.white}`};
   border-radius: 4px;
   color: ${(props) => props.theme.white};
+  cursor: pointer;
 `;
 
 export default Contact;
