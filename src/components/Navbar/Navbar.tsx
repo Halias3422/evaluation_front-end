@@ -51,10 +51,12 @@ const Header = styled.header`
   position: fixed;
   top: 0px;
   opacity: 0;
-  overflow: hidden;
   @media screen and (min-width: 1024px) {
     width: fit-content;
+    max-height: 100%;
     position: fixed;
+    overflow: scroll;
+    scrollbar-width: none;
   }
 `;
 export default Navbar;

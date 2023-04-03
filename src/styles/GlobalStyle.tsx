@@ -57,8 +57,11 @@ margin: 0px;
   }
   @media screen and (min-width: 2101px) {
     width: 90%;
-    padding-left: 0px;
+    padding-left: 10vw;
   }
+@media screen and (min-width: 2401px) {
+		padding-left: 0px;
+}
 }
 
 .textHoverEffect, .objectHoverEffect {
