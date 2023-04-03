@@ -58,6 +58,9 @@ const Header = styled.header`
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 export default Navbar;
