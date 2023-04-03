@@ -2,10 +2,22 @@ import PageContext from "@/context/pageContext";
 import { Category } from "@/interfaces/categories";
 import { pagesPaths } from "@/interfaces/pages";
 import { patua } from "@/styles/fonts";
-import { useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
 
-const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
+const MobileCategoriesMenu = ({
+  categories,
+  setMenuOpen,
+}: {
+  categories: Category[];
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const { pageContext, setPageContext } = useContext(PageContext);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
@@ -38,7 +50,10 @@ const MobileCategoriesMenu = ({ categories }: { categories: Category[] }) => {
         id="categoriesSelect"
         className={patua.className}
         name="categoriesSelect"
-        onChange={(e) => setSelectedCategory(e.currentTarget.value)}
+        onChange={(e) => {
+          setSelectedCategory(e.currentTarget.value);
+          setMenuOpen(false);
+        }}
         value={selectedCategory}
       >
         <option value="Toutes">Toutes</option>

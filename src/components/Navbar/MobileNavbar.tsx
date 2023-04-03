@@ -57,7 +57,10 @@ const MobileNavbar = ({
       >
         <Logo setMenuOpen={setMenuOpen} />
         {pageContext.currentPath.includes(pagesPaths.gallery) && (
-          <MobileCategoriesMenu categories={categories} />
+          <MobileCategoriesMenu
+            categories={categories}
+            setMenuOpen={setMenuOpen}
+          />
         )}
         <HamburgerContainer onClick={() => setMenuOpen(!menuOpen)}>
           <SvgHamburgerMenu />

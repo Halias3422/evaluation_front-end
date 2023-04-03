@@ -57,6 +57,7 @@ const Header = styled.header`
     position: fixed;
     overflow: scroll;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 `;
 export default Navbar;
