@@ -1,14 +1,16 @@
 import { DisplayedPhotos, Photo } from "@/interfaces/photos";
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { Category } from "@/interfaces/categories";
 import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
 import PageContext from "@/context/pageContext";
 import { pagesPaths } from "@/interfaces/pages";
+import SvgCross from "@/svgs/Cross";
 
 const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   const { pageContext } = useContext(PageContext);
+  const [fullScreenPhoto, setFullScreenPhoto] = useState<Photo | null>(null);
   const [displayedPhotos, setDisplayedPhotos] = useState<DisplayedPhotos>({
     category: "",
     photos: photos,
@@ -16,6 +18,15 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
     column2: [],
     column3: [],
   });
+
+  const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
+    const selectedPhoto = photos.find(
+      (photo) => photo.title === e.currentTarget.title
+    );
+    if (selectedPhoto) {
+      setFullScreenPhoto(selectedPhoto);
+    }
+  };
 
   useEffect(() => {
     const galleryContainer = document.getElementById("galleryPage");
@@ -37,6 +48,8 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
           title={displayedPhotos.photos[i].title}
           width={width}
           height={height}
+          className="objectHoverEffect"
+          onClick={handleImageClick}
         />
       );
     }
@@ -80,24 +93,111 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
     document.getElementById("galleryPage")?.classList.add("appearingObject");
   }, [displayedPhotos.category]);
 
+  const handleFullScreenPhotoLoad = (e: SyntheticEvent<HTMLDivElement>) => {
+    e.currentTarget.addEventListener("animationend", () => {
+      const svg = document.getElementById("svgContainer");
+      if (svg) {
+        svg.classList.remove("appearingObject");
+      }
+    });
+    e.currentTarget.addEventListener("click", (e) => {
+      const image = document.getElementById("fullScreenImage");
+      if (!image?.contains(e.target as HTMLElement)) {
+        setFullScreenPhoto(null);
+      }
+    });
+  };
+
   return (
-    <div id="galleryPage" className="pageContainer">
-      <section className="pageContentWrapper">
-        {displayedPhotos.photos.length > 0 ? (
-          <>
-            <ImagesColumn>{[...displayedPhotos.column1]}</ImagesColumn>
-            <ImagesColumn>{[...displayedPhotos.column2]}</ImagesColumn>
-            <ImagesColumn>{[...displayedPhotos.column3]}</ImagesColumn>
-          </>
-        ) : (
-          <h2 className="mainTheme">
-            Il n'y a actuellement aucune photo dans cette catégorie :(
-          </h2>
-        )}
-      </section>
-    </div>
+    <>
+      <div id="galleryPage" className="pageContainer">
+        <section className="pageContentWrapper">
+          {displayedPhotos.photos.length > 0 ? (
+            <>
+              <ImagesColumn>{[...displayedPhotos.column1]}</ImagesColumn>
+              <ImagesColumn>{[...displayedPhotos.column2]}</ImagesColumn>
+              <ImagesColumn>{[...displayedPhotos.column3]}</ImagesColumn>
+            </>
+          ) : (
+            <h2 className="mainTheme">
+              Il n'y a actuellement aucune photo dans cette catégorie :(
+            </h2>
+          )}
+        </section>
+      </div>
+      {fullScreenPhoto && (
+        <PopUpBackground onLoad={(e) => handleFullScreenPhotoLoad(e)}>
+          <SvgContainer
+            id="svgContainer"
+            className="appearingObject"
+            onClick={() => setFullScreenPhoto(null)}
+          >
+            <SvgCross />
+          </SvgContainer>
+          <FullScreenImage
+            id="fullScreenImage"
+            src={fullScreenPhoto.imageBig.image}
+            alt={fullScreenPhoto.title}
+            width={fullScreenPhoto.imageBig.width}
+            height={fullScreenPhoto.imageBig.height}
+          />
+        </PopUpBackground>
+      )}
+    </>
   );
 };
+
+const PopUpBackground = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  animation: 1s color-background forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @keyframes color-background {
+    from {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+`;
+
+const FullScreenImage = styled(Image)`
+  object-fit: contain;
+  animation: 1.2s image-grow ease forwards;
+  @keyframes image-grow {
+    from {
+      max-width: 0%;
+      max-height: 0%;
+    }
+    to {
+      max-width: 85%;
+      max-height: 85%;
+    }
+  }
+`;
+
+const SvgContainer = styled.div`
+  position: absolute;
+  top: 2%;
+  right: 2%;
+	cursor: pointer;
+  }
+	&:hover {
+		opacity: 1 !important;
+		animation: 2s svgHoverEffect infinite linear ;
+		@keyframes svgHoverEffect {
+		 100% {
+			transform: rotate(360deg);
+		}
+
+		}
+	}
+`;
 
 const ImagesColumn = styled.div`
   display: flex;
@@ -115,6 +215,7 @@ const PhotoImage = styled(Image)`
   margin: 0 auto;
   height: auto;
   object-fit: contain;
+  cursor: pointer;
   @media screen and (min-width: 1024px) {
     margin: unset;
   }
