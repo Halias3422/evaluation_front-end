@@ -1,7 +1,7 @@
 export interface ContactForm {
-  name: string;
-  email: string;
-  phone: string;
-  object: string;
-  request: string;
+  nameInput: string;
+  emailInput: string;
+  phoneInput: string;
+  objectInput: string;
+  requestInput: string;
 }

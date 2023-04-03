@@ -9,11 +9,11 @@ import { ContactForm } from "@/interfaces/contact";
 const Contact = () => {
   const { pageContext } = useContext(PageContext);
   const [formData, setFormData] = useState<ContactForm>({
-    name: "",
-    email: "",
-    phone: "",
-    object: "",
-    request: "",
+    nameInput: "",
+    emailInput: "",
+    phoneInput: "",
+    objectInput: "",
+    requestInput: "",
   });
   const [formSubmit, setFormSubmit] = useState({
     message: "",
@@ -57,7 +57,7 @@ const Contact = () => {
   ) => {
     setFormData({
       ...formData,
-      [e.currentTarget.id.replace("Input", "")]: e.currentTarget.value,
+      [e.currentTarget.id]: e.currentTarget.value,
     });
   };
 
