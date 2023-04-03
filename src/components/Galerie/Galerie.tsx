@@ -42,6 +42,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
       const { image, width, height } = displayedPhotos.photos[i].imageSmall;
       columnImages.push(
         <PhotoImage
+          priority
           key={i}
           src={image}
           alt={displayedPhotos.photos[i].title}
@@ -135,6 +136,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
             <SvgCross />
           </SvgContainer>
           <FullScreenImage
+            priority
             id="fullScreenImage"
             src={fullScreenPhoto.imageBig.image}
             alt={fullScreenPhoto.title}
