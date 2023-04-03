@@ -109,6 +109,18 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
     });
   };
 
+  const handleImageTransition = () => {
+    const image = document.getElementById(
+      "fullScreenImage"
+    ) as HTMLImageElement;
+    if (image) {
+      image.addEventListener("animationend", () => {
+        image.src = fullScreenPhoto?.imageBig.image || "";
+        image.srcset = fullScreenPhoto?.imageBig.image || "";
+      });
+    }
+  };
+
   return (
     <>
       <div id="galleryPage" className="pageContainer">
@@ -138,10 +150,11 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
           <FullScreenImage
             priority
             id="fullScreenImage"
-            src={fullScreenPhoto.imageBig.image}
+            src={fullScreenPhoto.imageSmall.image}
             alt={fullScreenPhoto.title}
             width={fullScreenPhoto.imageBig.width}
             height={fullScreenPhoto.imageBig.height}
+            onLoad={handleImageTransition}
           />
         </PopUpBackground>
       )}
