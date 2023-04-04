@@ -9,6 +9,8 @@ const LoadingAnim = () => {
 };
 
 const Spinner = styled.svg`
+  position: absolute;
+  float: center;
   animation: rotate 2s linear infinite;
   top: 50%;
   left: 50%;

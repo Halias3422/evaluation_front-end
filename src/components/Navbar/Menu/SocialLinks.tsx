@@ -5,8 +5,9 @@ import styled from "styled-components";
 const SocialLinks = () => {
   return (
     <SocialLinksContainer>
-      <Link href="https://www.facebook.com/fake-page">
+      <Link href="https://www.facebook.com/fake-page-that-doesnt-exist">
         <SocialImage
+          priority
           className="objectHoverEffect"
           src="/facebook.webp"
           alt="facebook"
@@ -15,8 +16,9 @@ const SocialLinks = () => {
           title="Mon compte Facebook"
         />
       </Link>
-      <Link href="https://www.instragram.com/fake-page">
+      <Link href="https://www.instragram.com/fake-page-that-doesnt-exist">
         <SocialImage
+          priority
           className="objectHoverEffect"
           src="/instagram.webp"
           alt="instagram"

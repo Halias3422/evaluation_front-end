@@ -114,9 +114,13 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
 
   const handleImageGrowth = () => {
     setFullScreenIsLoading(false);
-    const imageContainer = document.getElementById("fullScreenImageContainer");
-    if (imageContainer) {
-      imageContainer.style.animation = "1.2s image-grow ease forwards";
+    const image = document.getElementById("fullScreenImage");
+    if (image) {
+      image.addEventListener("animationend", () => {
+        image.style.height = "fit-content";
+        image.style.width = "fit-content";
+      });
+      image.style.animation = "1.2s image-grow ease forwards";
     }
   };
 
@@ -146,18 +150,19 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
           >
             <SvgCross />
           </SvgContainer>
-          <ImageContainer id="fullScreenImageContainer">
-            {fullScreenIsLoading && <LoadingAnim />}
-            <FullScreenImage
-              priority
-              id="fullScreenImage"
-              src={fullScreenPhoto.imageBig.image}
-              alt={fullScreenPhoto.title}
-              fill
-              onLoad={handleImageGrowth}
-              sizes="80vw"
-            />
-          </ImageContainer>
+          {fullScreenIsLoading && <LoadingAnim />}
+          <FullScreenImage
+            priority
+            id="fullScreenImage"
+            src={fullScreenPhoto.imageBig.image}
+            alt={fullScreenPhoto.title}
+            onLoad={handleImageGrowth}
+            sizes="80vw"
+            width={fullScreenPhoto.imageBig.width / 10}
+            height={fullScreenPhoto.imageBig.height / 10}
+            $width={fullScreenPhoto.imageBig.width}
+            $height={fullScreenPhoto.imageBig.height}
+          />
         </PopUpBackground>
       )}
     </>
@@ -178,29 +183,23 @@ const PopUpBackground = styled.div`
       background-color: rgba(0, 0, 0, 0);
     }
     to {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.9);
     }
   }
 `;
 
-const ImageContainer = styled.div`
-  position: relative;
-  width: 150px;
-  height: 150px;
+const FullScreenImage = styled(Image)<{ $width: number; $height: number }>`
+  object-fit: contain;
   @keyframes image-grow {
     from {
-      width: 150px;
-      height: 150px;
+      width: ${(props) => `${props.$width / 10}px`};
+      height: ${(props) => `${props.$height / 10}px`};
     }
     to {
       width: 85%;
       height: 85%;
     }
   }
-`;
-
-const FullScreenImage = styled(Image)`
-  object-fit: contain;
 `;
 
 const SvgContainer = styled.div`
