@@ -7,6 +7,7 @@ import { pageAnimationsHandler } from "@/lib/pageAnimationsHandler";
 import PageContext from "@/context/pageContext";
 import { pagesPaths } from "@/interfaces/pages";
 import SvgCross from "@/svgs/Cross";
+import LoadingAnim from "@/svgs/LoadingAnim";
 
 const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   const { pageContext } = useContext(PageContext);
@@ -18,6 +19,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
     column2: [],
     column3: [],
   });
+  const [fullScreenIsLoading, setFullScreenIsLoading] = useState<boolean>(true);
 
   const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
     const selectedPhoto = photos.find(
@@ -95,6 +97,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   }, [displayedPhotos.category]);
 
   const handleFullScreenPhotoLoad = (e: SyntheticEvent<HTMLDivElement>) => {
+    setFullScreenIsLoading(true);
     e.currentTarget.addEventListener("animationend", () => {
       const svg = document.getElementById("svgContainer");
       if (svg) {
@@ -110,6 +113,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   };
 
   const handleImageGrowth = () => {
+    setFullScreenIsLoading(false);
     const imageContainer = document.getElementById("fullScreenImageContainer");
     if (imageContainer) {
       imageContainer.style.animation = "1.2s image-grow ease forwards";
@@ -143,6 +147,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
             <SvgCross />
           </SvgContainer>
           <ImageContainer id="fullScreenImageContainer">
+            {fullScreenIsLoading && <LoadingAnim />}
             <FullScreenImage
               priority
               id="fullScreenImage"
@@ -150,6 +155,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
               alt={fullScreenPhoto.title}
               fill
               onLoad={handleImageGrowth}
+              sizes="80vw"
             />
           </ImageContainer>
         </PopUpBackground>
@@ -179,12 +185,12 @@ const PopUpBackground = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-  width: 0px;
-  height: 0px;
+  width: 10px;
+  height: 10px;
   @keyframes image-grow {
     from {
-      width: 0%;
-      height: 0%;
+      width: 10;
+      height: 10;
     }
     to {
       width: 85%;
@@ -210,7 +216,6 @@ const SvgContainer = styled.div`
 		 100% {
 			transform: rotate(360deg);
 		}
-
 		}
 	}
 `;
