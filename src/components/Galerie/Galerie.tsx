@@ -26,6 +26,7 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
       (photo) => photo.title === e.currentTarget.title
     );
     if (selectedPhoto) {
+      setFullScreenIsLoading(true);
       setFullScreenPhoto(selectedPhoto);
     }
   };
@@ -97,7 +98,6 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
   }, [displayedPhotos.category]);
 
   const handleFullScreenPhotoLoad = (e: SyntheticEvent<HTMLDivElement>) => {
-    setFullScreenIsLoading(true);
     e.currentTarget.addEventListener("animationend", () => {
       const svg = document.getElementById("svgContainer");
       if (svg) {
@@ -185,12 +185,12 @@ const PopUpBackground = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-  width: 10px;
-  height: 10px;
+  width: 150px;
+  height: 150px;
   @keyframes image-grow {
     from {
-      width: 10;
-      height: 10;
+      width: 150px;
+      height: 150px;
     }
     to {
       width: 85%;
