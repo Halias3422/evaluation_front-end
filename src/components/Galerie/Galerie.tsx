@@ -109,6 +109,13 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
     });
   };
 
+  const handleImageGrowth = () => {
+    const imageContainer = document.getElementById("fullScreenImageContainer");
+    if (imageContainer) {
+      imageContainer.style.animation = "1.2s image-grow ease forwards";
+    }
+  };
+
   return (
     <>
       <div id="galleryPage" className="pageContainer">
@@ -135,14 +142,16 @@ const Galerie = ({ photos }: { photos: Photo[]; categories: Category[] }) => {
           >
             <SvgCross />
           </SvgContainer>
-          <FullScreenImage
-            priority
-            id="fullScreenImage"
-            src={fullScreenPhoto.imageBig.image}
-            alt={fullScreenPhoto.title}
-            width={fullScreenPhoto.imageBig.width}
-            height={fullScreenPhoto.imageBig.height}
-          />
+          <ImageContainer id="fullScreenImageContainer">
+            <FullScreenImage
+              priority
+              id="fullScreenImage"
+              src={fullScreenPhoto.imageBig.image}
+              alt={fullScreenPhoto.title}
+              fill
+              onLoad={handleImageGrowth}
+            />
+          </ImageContainer>
         </PopUpBackground>
       )}
     </>
@@ -168,19 +177,24 @@ const PopUpBackground = styled.div`
   }
 `;
 
-const FullScreenImage = styled(Image)`
-  object-fit: contain;
-  animation: 1.2s image-grow ease forwards;
+const ImageContainer = styled.div`
+  position: relative;
+  width: 0px;
+  height: 0px;
   @keyframes image-grow {
     from {
-      max-width: 0%;
-      max-height: 0%;
+      width: 0%;
+      height: 0%;
     }
     to {
-      max-width: 85%;
-      max-height: 85%;
+      width: 85%;
+      height: 85%;
     }
   }
+`;
+
+const FullScreenImage = styled(Image)`
+  object-fit: contain;
 `;
 
 const SvgContainer = styled.div`
